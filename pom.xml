@@ -8,7 +8,11 @@
   <name>studiesProject Maven Webapp</name>
   <url>http://maven.apache.org</url>
 
-  <dependencies>
+  <properties>
+  <org.richfaces.bom.version>4.1.0.Final</org.richfaces.bom.version>
+  </properties>
+
+    <dependencies>
 
     <dependency>
       <groupId>junit</groupId>
@@ -29,6 +33,12 @@
       <artifactId>jsf-impl</artifactId>
       <version>2.2.12</version>
     </dependency>
+
+      <dependency>
+        <groupId>org.richfaces</groupId>
+        <artifactId>richfaces</artifactId>
+        <version>4.5.15.Final</version>
+      </dependency>
 
     <!--END JSF dependencies-->
 
