@@ -3,5 +3,24 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
     http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
-  
+
+    <navigation-rule>
+        <from-view-id>../views/error.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>logout</from-outcome>
+            <to-view-id>home</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>../views/home.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{helloWorld.handleLogin}</from-action>
+            <from-outcome>SUCCESS</from-outcome>
+            <to-view-id>../views/loggedHome.xhtml</to-view-id>
+            <redirect/>
+
+        </navigation-case>
+    </navigation-rule>
+
 </faces-config>

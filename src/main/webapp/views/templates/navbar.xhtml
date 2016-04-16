@@ -1,0 +1,98 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+<body>
+<style type="text/css">
+    /*Green Bar stick to top window border*/
+    .globalNavbar {
+        border: none;
+        width: 100%;
+        position: fixed;
+        text-decoration: none;
+        height: 33px;
+        float: left;
+        background: #740009;
+        z-index: 9000;
+
+    }
+    /*List inside the Bar STYLE*/
+    .globalNavbar ul {
+        cursor: pointer;
+        list-style-type: none;
+        color: white;
+        overflow: hidden;
+        list-style: none;
+        width: auto;
+        margin: 0px;
+        padding: 0px;
+    }
+    /*Elements on the list from the main bar STYLE*/
+    .globalNavbar li {
+        float: left;
+        line-height: 33px;
+    }
+    .globalNavbar li a {
+        padding: 9px 10px;
+    }
+
+    .globalNavbar ul li:hover ul ul {
+        display: none;
+    }
+    .globalNavbar ul li:hover ul {
+        display: block;
+    }
+    .globalNavbar ul li li:hover ul {
+        display: block;
+        margin-left: 15em;
+        margin-top: -33px;
+    }
+
+    /*!*Sublist*!*/
+    .globalNavbar li ul {
+        display: none;
+        position: fixed;
+        /*position: absolute;*/
+        text-align: left;
+        width: 15em;
+        background-color: #740009;
+    }
+
+    .globalNavbar li li {
+        width: 100%;
+    }
+
+    .globalNavbar li:hover {
+        background-color: #982500;
+        color: white;
+    }
+
+</style>
+
+<div class="globalNavbar">
+    <ul>
+        <li>
+            <a>Menu</a>
+            <ul>
+                <li><a  >Adversary Cases</a></li>
+                <li><a  >Cases</a></li>
+                <li><a  >Tardy Cases</a></li>
+                <li><a  >Favourtite Cases</a></li>
+                <li><a  >Recent Cases</a>
+                    <ul>
+                        <li><a>15-32134</a></li>
+                        <li><a>13-55542</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a>Profile</a>
+
+            <ul>
+                <li><a  >Settings</a></li>
+                <li><a  >Log out</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

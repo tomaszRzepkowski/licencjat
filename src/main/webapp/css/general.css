@@ -3,5 +3,74 @@
     font-size: 13px;
 }
 #content {
-    padding-top: 33px;
+    height: calc(100vh - 280px);
+    padding: 5px 5px;
+}
+#header {
+    height: 34px;
+}
+#header a {
+    color: white;
+    text-decoration: none;
+}
+
+#messages {
+    height: 200px;
+    padding: 15px 50px;
+}
+
+#footer {
+    height: 46px;
+}
+
+.globalFooter {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 5px 20px;
+    text-align: center;
+    font-size: 9px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: #565656;
+    color: #A9A9A9;
+}
+
+.errorPanel {
+    top: 25%;
+    left: 33%;
+    text-align: center;
+    position: relative;
+    width: 50%;
+}
+
+.center-top {
+    top: 25%;
+    left: 33%;
+}
+
+.loginPanel {
+    top: 20%;
+    left: 47%;
+    text-align: center;
+    position: absolute;
+}
+
+.padding-horizontal-15px {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.padding-horizontal-5px {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.text-center {
+    text-align: center;
+}
+.f-left {
+    float: left;
+}
+.f-right {
+    float: right;
 }

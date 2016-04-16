@@ -29,12 +29,21 @@
             </ui:insert>
         </div>
 
+        <div id="messages">
+            <ui:insert name="messages">
+
+            </ui:insert>
+        </div>
         <div id="footer">
             <ui:insert name="footer" >
                 <ui:include src="footer.xhtml" />
             </ui:insert>
         </div>
-
+        <script type="text/javascript">
+            function redirect(link) {
+                window.location.href = "/views/" + link;
+            }
+        </script>
     </div>
 
 </h:body>

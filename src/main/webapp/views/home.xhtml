@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j" xmlns:f="http://java.sun.com/jsf/core">
+
+
+<h:body>
+    <ui:composition template="templates/master.xhtml">
+        <ui:define name="content">
+            <div class="loginPanel">
+            <h:form>
+                Please log in:
+                <div class="row">
+                    <div class="col-md-12 padding-horizontal-5px">
+                        <h:inputText id="userLogin" value="#{helloWorld.userLogin}"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 padding-horizontal-5px">
+                        <h:inputSecret id="userPassword" value="#{helloWorld.userPassword}"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 padding-horizontal-5px">
+                        <h:commandButton id="loginButton" value="Log In"
+                                           action="#{helloWorld.handleLogin}" >
+                            <f:setPropertyActionListener value="true" target="#{helloWorld.loginButtonClicked}"/>
+                        </h:commandButton>
+                    </div>
+                </div>
+            </h:form>
+                <script type="text/javascript">
+                    function showMessages() {
+                        var element = document.getElementById('messagesContainer');
+                        if(element.style.display == 'none') {
+                            element.style.display = 'block';
+                        }
+                    }
+                </script>
+            </div>
+
+        </ui:define>
+        <ui:define name="messages">
+            <h:panelGroup id="messagesContainer" rendered="#{helloWorld.loginButtonClicked}">
+                <h:panelGroup rendered="#{helloWorld.loginSuccess}">
+                    <div class="alert alert-success">Success! You've been logged in</div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{not helloWorld.loginDTO.userFound}">
+                    <div class="alert alert-danger">User not found</div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{ (not helloWorld.loginDTO.validPassword or not helloWorld.loginSuccess) and helloWorld.loginDTO.userFound}">
+                    <div class="alert alert-danger">Please provide valid credentials</div>
+                </h:panelGroup>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</h:body>
+
+</html>

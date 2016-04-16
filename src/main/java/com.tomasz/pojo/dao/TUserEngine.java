@@ -1,10 +1,11 @@
-package com.rzepkowski.tomasz.pojo.engine;
+package com.tomasz.pojo.dao;
 
 import java.sql.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,8 +13,9 @@ import javax.persistence.Table;
  * @author Tomek on 10.04.2016.
  */
 @Entity
-@Table(name = "tbl_user", schema = "sm", catalog = "")
+@Table(name = "tbl_user", schema = "sm")
 public class TUserEngine {
+
     private long userId;
     private String name;
     private String lastName;
@@ -28,6 +30,7 @@ public class TUserEngine {
 
     @Id
     @Column(name = "user_id", nullable = false)
+    @GeneratedValue
     public long getUserId() {
         return userId;
     }
