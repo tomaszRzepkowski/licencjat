@@ -2,10 +2,16 @@ package com.tomasz;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 
+import java.io.IOException;
+import java.lang.String;
 import com.tomasz.beans.UserController;
 import com.tomasz.dto.LoginDTO;
 import com.tomasz.utils.ApplicationContextProvider;
@@ -20,7 +26,7 @@ public class Index {
     private String userLogin;
     private String userPassword;
     private UserController controller;
-    private boolean loginSuccess;
+    private static boolean loginSuccess;
     private boolean loginButtonClicked;
     private LoginDTO loginDTO;
     static Logger logger = Logger.getLogger(Index.class);
@@ -47,7 +53,7 @@ public class Index {
             }
             userLogin = null;
             userPassword = null;
-            return "loggedHome.xhtml?faces-redirect=true";
+            return "loggedHome.xhtml";
         } else {
             loginSuccess = false;
             return StringUtils.ERROR;
@@ -57,6 +63,7 @@ public class Index {
     private LoginDTO verifyCredentials(String login, String password) {
         return controller.verifyCredentials(login, password);
     }
+
 
     public UserController getController() {
         return controller;
@@ -104,5 +111,9 @@ public class Index {
 
     public void setLoginButtonClicked(boolean loginButtonClicked) {
         this.loginButtonClicked = loginButtonClicked;
+    }
+
+    public String handleLogout() {
+        return "home.xhtml" + StringUtils.FACES_REDIRECT;
     }
 }

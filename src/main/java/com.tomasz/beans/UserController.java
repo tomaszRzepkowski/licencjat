@@ -50,4 +50,8 @@ public class UserController {
 
         return loginDTO;
     }
+
+    public TUserEngine getUserByLogin(String login) {
+        return userService.getUserByLogin(login);
+    }
 }

@@ -10,5 +10,6 @@ public class StringUtils {
     public static final String SUCCESS = "SUCCESS";
     public static final String ERROR = "ERROR";
     public static final String FAILURE = "FAILURE";
+    public static final String FACES_REDIRECT = "?faces-redirect=true";
 
 }

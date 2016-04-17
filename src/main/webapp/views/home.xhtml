@@ -6,14 +6,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jstl/core"
       xmlns:a4j="http://richfaces.org/a4j" xmlns:f="http://java.sun.com/jsf/core">
 
 
 <h:body>
     <ui:composition template="templates/master.xhtml">
+        <ui:define name="header">
+            <div class="globalNavbar"></div>
+        </ui:define>
         <ui:define name="content">
             <div class="loginPanel">
-            <h:form>
+            <h:form id="loginForm" name="loginForm"
+                    method='POST'>
                 Please log in:
                 <div class="row">
                     <div class="col-md-12 padding-horizontal-5px">
@@ -33,6 +38,8 @@
                         </h:commandButton>
                     </div>
                 </div>
+                <input type="hidden"
+                       name="${_csrf.parameterName}" value="${_csrf.token}" />
             </h:form>
                 <script type="text/javascript">
                     function showMessages() {

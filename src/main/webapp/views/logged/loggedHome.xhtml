@@ -10,29 +10,11 @@
 
 
 <h:body>
-    <ui:composition template="templates/master.xhtml">
+    <ui:composition template="../templates/master.xhtml">
         <ui:define name="content">
             <div class="loginPanel">
             <h:form>
-                Please log in:
-                <div class="row">
-                    <div class="col-md-12 padding-horizontal-5px">
-                        <h:inputText id="userLogin" value="#{helloWorld.userLogin}"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 padding-horizontal-5px">
-                        <h:inputSecret id="userPassword" value="#{helloWorld.userPassword}"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 padding-horizontal-5px">
-                        <a4j:commandButton id="loginButton" value="Log In" execute="@form" render="@all"
-                                           action="#{helloWorld.handleLogin}" oncomplete="redirect('error.xhtml')">
-                            <f:setPropertyActionListener value="true" target="#{helloWorld.loginButtonClicked}"/>
-                        </a4j:commandButton>
-                    </div>
-                </div>
+                <h3>Choose action.</h3>
             </h:form>
                 <script type="text/javascript">
                     function showMessages() {
