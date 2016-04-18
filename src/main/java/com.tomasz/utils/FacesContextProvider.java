@@ -30,4 +30,24 @@ public class FacesContextProvider {
         return FacesContext.getCurrentInstance().getExternalContext().getRequestMap();
     }
 
+    public static void putSessionParameter(String name, Object object) {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(name, object);
+    }
+
+    public static void removeSessionParameter(String name) {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(name);
+    }
+
+    public static Object getSessionParameter(String name) {
+        return FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(name);
+    }
+
+    public static boolean isSessionContainsKey(String name) {
+        return FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey(name);
+    }
+
+    public static boolean isSessionContainsValue(Object object) {
+        return FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsValue(object);
+    }
+
 }

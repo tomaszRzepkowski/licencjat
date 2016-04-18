@@ -21,6 +21,7 @@ import com.tomasz.utils.ApplicationContextProvider;
 import com.tomasz.utils.StringUtils;
 
 import static com.tomasz.utils.FacesContextProvider.getExternalContext;
+import static com.tomasz.utils.FacesContextProvider.getFacesContext;
 import static com.tomasz.utils.FacesContextProvider.getSessionAttributes;
 
 @ManagedBean(name = "helloWorld", eager = true)
@@ -43,12 +44,6 @@ public class Index {
         context = ApplicationContextProvider.getApplicationContext();
         controller = (UserController) context.getBean(UserController.class);
         logger.info("HelloWorld started!");
-    }
-    public String getMessage() {
-
-        controller.siemanko();
-        String test = controller.getName();
-        return "Hello World!" + test;
     }
 
     public String handleLogin() {
@@ -82,6 +77,7 @@ public class Index {
 
     public String handleLogout() {
         resetParameters();
+        getExternalContext().invalidateSession();
         return "/views/home.xhtml" + StringUtils.FACES_REDIRECT;
     }
 
