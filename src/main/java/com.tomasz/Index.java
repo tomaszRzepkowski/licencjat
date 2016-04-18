@@ -54,23 +54,35 @@ public class Index {
     public String handleLogin() {
         if( userLogin != null && !userLogin.equals("") && userPassword != null && !userPassword.equals("")) {
             loginDTO = verifyCredentials(userLogin, userPassword);
-            if(loginDTO.isUserFound() && loginDTO.isValidPassword()) {
-                loginSuccess = true;
-            }
-            getSessionAttributes().put("user", loginDTO);
             userLogin = null;
             userPassword = null;
-            return "logged/loggedHome.xhtml";
+            if(loginDTO.isUserFound() && loginDTO.isValidPassword()) {
+                loginSuccess = true;
+                getSessionAttributes().put("user", loginDTO);
+                return "logged/loggedHome.xhtml";
+            }
+            loginSuccess = false;
+            return "home.xhtml";
         } else {
             getSessionAttributes().remove("user");
             loginSuccess = false;
             return StringUtils.ERROR;
-            //TODO LOGOWANIE SIE UDALO ALE SIE NIE UDALO GBO BYLO ZLE HASLO
         }
     }
 
     private LoginDTO verifyCredentials(String login, String password) {
         return controller.verifyCredentials(login, password);
+    }
+
+
+    private void resetParameters() {
+        loginSuccess = false;
+        loginButtonClicked = false;
+    }
+
+    public String handleLogout() {
+        resetParameters();
+        return "/views/home.xhtml" + StringUtils.FACES_REDIRECT;
     }
 
     public UserController getController() {
@@ -121,7 +133,4 @@ public class Index {
         this.loginButtonClicked = loginButtonClicked;
     }
 
-    public String handleLogout() {
-        return "/views/home.xhtml" + StringUtils.FACES_REDIRECT;
-    }
 }
