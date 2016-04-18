@@ -2,6 +2,7 @@ package com.tomasz;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,10 +13,15 @@ import org.springframework.context.ApplicationContext;
 
 import java.io.IOException;
 import java.lang.String;
+import java.util.Enumeration;
+
 import com.tomasz.beans.UserController;
 import com.tomasz.dto.LoginDTO;
 import com.tomasz.utils.ApplicationContextProvider;
 import com.tomasz.utils.StringUtils;
+
+import static com.tomasz.utils.FacesContextProvider.getExternalContext;
+import static com.tomasz.utils.FacesContextProvider.getSessionAttributes;
 
 @ManagedBean(name = "helloWorld", eager = true)
 @SessionScoped
@@ -51,19 +57,21 @@ public class Index {
             if(loginDTO.isUserFound() && loginDTO.isValidPassword()) {
                 loginSuccess = true;
             }
+            getSessionAttributes().put("user", loginDTO);
             userLogin = null;
             userPassword = null;
-            return "loggedHome.xhtml";
+            return "logged/loggedHome.xhtml";
         } else {
+            getSessionAttributes().remove("user");
             loginSuccess = false;
             return StringUtils.ERROR;
+            //TODO LOGOWANIE SIE UDALO ALE SIE NIE UDALO GBO BYLO ZLE HASLO
         }
     }
 
     private LoginDTO verifyCredentials(String login, String password) {
         return controller.verifyCredentials(login, password);
     }
-
 
     public UserController getController() {
         return controller;
@@ -114,6 +122,6 @@ public class Index {
     }
 
     public String handleLogout() {
-        return "home.xhtml" + StringUtils.FACES_REDIRECT;
+        return "/views/home.xhtml" + StringUtils.FACES_REDIRECT;
     }
 }
