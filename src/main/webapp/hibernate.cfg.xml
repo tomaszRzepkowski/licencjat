@@ -7,6 +7,12 @@
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.search.autoregister_listeners">false</property>
         <mapping class="com.tomasz.pojo.dao.TUserEngine"/>
+        <mapping class="com.tomasz.pojo.dao.TClassEngine"/>
+        <mapping class="com.tomasz.pojo.dao.TLessonEngine"/>
+        <mapping class="com.tomasz.pojo.dao.TMarkEngine"/>
+        <mapping class="com.tomasz.pojo.dao.TStudentEngine"/>
+        <mapping class="com.tomasz.pojo.dao.TSubjectEngine"/>
+        <mapping class="com.tomasz.pojo.dao.TTeacherEngine"/>
     </session-factory>
 
 
