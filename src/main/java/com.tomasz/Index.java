@@ -3,6 +3,7 @@ package com.tomasz;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.Filter;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,11 +19,13 @@ import java.util.Enumeration;
 import com.tomasz.beans.UserController;
 import com.tomasz.dto.LoginDTO;
 import com.tomasz.utils.ApplicationContextProvider;
+import com.tomasz.utils.FileUtils;
 import com.tomasz.utils.StringUtils;
 
 import static com.tomasz.utils.FacesContextProvider.getExternalContext;
 import static com.tomasz.utils.FacesContextProvider.getFacesContext;
 import static com.tomasz.utils.FacesContextProvider.getSessionAttributes;
+import static com.tomasz.utils.FileUtils.downloadFile;
 
 @ManagedBean(name = "helloWorld", eager = true)
 @SessionScoped
@@ -129,4 +132,7 @@ public class Index {
         this.loginButtonClicked = loginButtonClicked;
     }
 
+    public void downloadTestFile() throws IOException {
+        FileUtils.downloadFile();
+    }
 }
