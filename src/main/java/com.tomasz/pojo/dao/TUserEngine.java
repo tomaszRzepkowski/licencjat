@@ -9,13 +9,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.tomasz.enums.EUserType;
+
 /**
- * @author Tomek on 10.04.2016.
+ * Created by Tomek on 20.04.2016.
  */
 @Entity
 @Table(name = "tbl_user", schema = "sm")
 public class TUserEngine {
-
     private long userId;
     private String name;
     private String lastName;
@@ -23,10 +24,12 @@ public class TUserEngine {
     private String address2;
     private String city;
     private Date birthDate;
+    private String loginDate;
     private String username;
     private String password;
     private String email;
     private String phone;
+    private EUserType userType;
 
     @Id
     @Column(name = "user_id", nullable = false)
@@ -139,6 +142,27 @@ public class TUserEngine {
         this.phone = phone;
     }
 
+    @Basic
+    @Column(name = "user_type", nullable = false, length = 15)
+    public EUserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(EUserType userType) {
+        this.userType = userType;
+    }
+
+    @Basic
+    @Column(name = "login_date", nullable = true)
+    public String getLoginDate() {
+        return loginDate;
+    }
+
+    public void setLoginDate(String loginDate) {
+        this.loginDate = loginDate;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if ( this == o ) return true;
@@ -157,6 +181,7 @@ public class TUserEngine {
         if ( password != null ? !password.equals(that.password) : that.password != null ) return false;
         if ( email != null ? !email.equals(that.email) : that.email != null ) return false;
         if ( phone != null ? !phone.equals(that.phone) : that.phone != null ) return false;
+        if ( userType != null ? !userType.equals(that.userType) : that.userType != null ) return false;
 
         return true;
     }
@@ -174,6 +199,7 @@ public class TUserEngine {
         result = 31 * result + ( password != null ? password.hashCode() : 0 );
         result = 31 * result + ( email != null ? email.hashCode() : 0 );
         result = 31 * result + ( phone != null ? phone.hashCode() : 0 );
+        result = 31 * result + ( userType != null ? userType.hashCode() : 0 );
         return result;
     }
 }

@@ -135,4 +135,8 @@ public class Index {
     public void downloadTestFile() throws IOException {
         FileUtils.downloadFile();
     }
+
+    public String showUserInfo() {
+        return "userInfo.xhtml";
+    }
 }

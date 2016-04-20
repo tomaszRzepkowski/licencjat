@@ -1,11 +1,15 @@
 package com.tomasz.beans;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.tomasz.dto.LoginDTO;
 import com.tomasz.pojo.dao.TUserEngine;
 import com.tomasz.service.UserService;
+import com.tomasz.utils.FacesContextProvider;
 
 /**
  * @author Tomek on 13.04.2016.
@@ -46,6 +50,8 @@ public class UserController {
         if(user != null) {
             loginDTO.setUserFound(true);
             loginDTO.setValidPassword(user.getPassword().equals(password));
+            loginDTO.setUsername(login);
+            userService.updateUserLoginDate(user.getUserId());
         }
 
         return loginDTO;
@@ -53,5 +59,13 @@ public class UserController {
 
     public TUserEngine getUserByLogin(String login) {
         return userService.getUserByLogin(login);
+    }
+
+    public List<TUserEngine> getCurrentUser() {
+        LoginDTO user = (LoginDTO) FacesContextProvider.getSessionParameter("user");
+        List<TUserEngine> users = new ArrayList<TUserEngine>();
+        TUserEngine userByLogin = userService.getUserByLogin(user.getUsername());
+        users.add(userByLogin);
+        return users;
     }
 }

@@ -30,5 +30,13 @@
             <redirect/>
         </navigation-case>
     </navigation-rule>
-
+    <navigation-rule>
+        <from-view-id>../views/logged/loggedHome.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{helloWorld.showUserInfo}</from-action>
+            <from-outcome>SUCCESS</from-outcome>
+            <to-view-id>../views/logged/userInfo.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

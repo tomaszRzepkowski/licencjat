@@ -29,4 +29,8 @@ public class UserService {
         result = userDao.getUserByLogin(login);
         return result;
     }
+
+    public void updateUserLoginDate(long userId) {
+        userDao.updateUserLoginDate(userId);
+    }
 }
