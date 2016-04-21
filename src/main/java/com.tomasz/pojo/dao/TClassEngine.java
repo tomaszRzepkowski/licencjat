@@ -3,12 +3,11 @@ package com.tomasz.pojo.dao;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Created by Tomek on 20.04.2016.
+ * @author Tomek on 21.04.2016.
  */
 @Entity
 @Table(name = "tbl_class", schema = "sm", catalog = "")
@@ -19,7 +18,6 @@ public class TClassEngine {
 
     @Id
     @Column(name = "class_id", nullable = false)
-    @GeneratedValue
     public long getClassId() {
         return classId;
     }

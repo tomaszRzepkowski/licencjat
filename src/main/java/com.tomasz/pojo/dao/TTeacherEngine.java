@@ -5,12 +5,11 @@ import java.sql.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Created by Tomek on 20.04.2016.
+ * @author Tomek on 21.04.2016.
  */
 @Entity
 @Table(name = "tbl_teachers", schema = "sm", catalog = "")
@@ -23,7 +22,6 @@ public class TTeacherEngine {
 
     @Id
     @Column(name = "teacher_id", nullable = false)
-    @GeneratedValue
     public long getTeacherId() {
         return teacherId;
     }
