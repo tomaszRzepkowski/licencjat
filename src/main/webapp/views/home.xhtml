@@ -21,19 +21,19 @@
                 Please log in:
                 <div class="row">
                     <div class="col-md-12 padding-horizontal-5px">
-                        <h:inputText id="userLogin" value="#{helloWorld.userLogin}"/>
+                        <h:inputText id="userLogin" value="#{applicationBean.userLogin}"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 padding-horizontal-5px">
-                        <h:inputSecret id="userPassword" value="#{helloWorld.userPassword}"/>
+                        <h:inputSecret id="userPassword" value="#{applicationBean.userPassword}"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 padding-horizontal-5px">
                         <h:commandButton id="loginButton" value="Log In"
-                                           action="#{helloWorld.handleLogin}" >
-                            <f:setPropertyActionListener value="true" target="#{helloWorld.loginButtonClicked}"/>
+                                           action="#{applicationBean.handleLogin}" >
+                            <f:setPropertyActionListener value="true" target="#{applicationBean.loginButtonClicked}"/>
                         </h:commandButton>
                     </div>
                 </div>
@@ -50,14 +50,14 @@
 
         </ui:define>
         <ui:define name="messages">
-            <h:panelGroup id="messagesContainer" rendered="#{helloWorld.loginButtonClicked}">
-                <h:panelGroup rendered="#{helloWorld.loginSuccess}">
+            <h:panelGroup id="messagesContainer" rendered="#{applicationBean.loginButtonClicked}">
+                <h:panelGroup rendered="#{applicationBean.loginSuccess}">
                     <div class="alert alert-success">Success! You've been logged in</div>
                 </h:panelGroup>
-                <h:panelGroup rendered="#{not helloWorld.loginDTO.userFound}">
+                <h:panelGroup rendered="#{not applicationBean.loginDTO.userFound}">
                     <div class="alert alert-danger">User not found</div>
                 </h:panelGroup>
-                <h:panelGroup rendered="#{ (not helloWorld.loginDTO.validPassword or not helloWorld.loginSuccess) and helloWorld.loginDTO.userFound}">
+                <h:panelGroup rendered="#{ (not applicationBean.loginDTO.validPassword or not applicationBean.loginSuccess) and applicationBean.loginDTO.userFound}">
                     <div class="alert alert-danger">Please provide valid credentials</div>
                 </h:panelGroup>
             </h:panelGroup>

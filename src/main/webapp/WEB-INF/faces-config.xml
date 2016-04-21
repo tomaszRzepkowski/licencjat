@@ -15,7 +15,7 @@
     <navigation-rule>
         <from-view-id>../views/home.xhtml</from-view-id>
         <navigation-case>
-            <from-action>#{helloWorld.handleLogin}</from-action>
+            <from-action>#{applicationBean.handleLogin}</from-action>
             <from-outcome>SUCCESS</from-outcome>
             <to-view-id>../views/logged/loggedHome.xhtml</to-view-id>
             <redirect/>
@@ -24,7 +24,7 @@
     <navigation-rule>
         <from-view-id>../views/logged</from-view-id>
         <navigation-case>
-            <from-action>#{helloWorld.handleLougout}</from-action>
+            <from-action>#{applicationBean.handleLougout}</from-action>
             <from-outcome>SUCCESS</from-outcome>
             <to-view-id>../views/home.xhtml</to-view-id>
             <redirect/>
@@ -33,7 +33,7 @@
     <navigation-rule>
         <from-view-id>../views/logged/loggedHome.xhtml</from-view-id>
         <navigation-case>
-            <from-action>#{helloWorld.showUserInfo}</from-action>
+            <from-action>#{applicationBean.showUserInfo}</from-action>
             <from-outcome>SUCCESS</from-outcome>
             <to-view-id>../views/logged/userInfo.xhtml</to-view-id>
             <redirect/>

@@ -28,14 +28,14 @@
 
         </ui:define>
         <ui:define name="messages">
-            <h:panelGroup id="messagesContainer" rendered="#{helloWorld.loginButtonClicked}">
-                <h:panelGroup rendered="#{helloWorld.loginSuccess}">
+            <h:panelGroup id="messagesContainer" rendered="#{applicationBean.loginButtonClicked}">
+                <h:panelGroup rendered="#{applicationBean.loginSuccess}">
                     <div class="alert alert-success">Success! You've been logged in</div>
                 </h:panelGroup>
-                <h:panelGroup rendered="#{not helloWorld.loginDTO.userFound}">
+                <h:panelGroup rendered="#{not applicationBean.loginDTO.userFound}">
                     <div class="alert alert-danger">User not found</div>
                 </h:panelGroup>
-                <h:panelGroup rendered="#{ (not helloWorld.loginDTO.validPassword or not helloWorld.loginSuccess) and helloWorld.loginDTO.userFound}">
+                <h:panelGroup rendered="#{ (not applicationBean.loginDTO.validPassword or not applicationBean.loginSuccess) and applicationBean.loginDTO.userFound}">
                     <div class="alert alert-danger">Please provide valid credentials</div>
                 </h:panelGroup>
             </h:panelGroup>

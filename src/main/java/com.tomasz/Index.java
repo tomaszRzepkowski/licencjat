@@ -2,19 +2,12 @@ package com.tomasz;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.Filter;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 
 import java.io.IOException;
 import java.lang.String;
-import java.util.Enumeration;
 
 import com.tomasz.beans.UserController;
 import com.tomasz.dto.LoginDTO;
@@ -23,11 +16,9 @@ import com.tomasz.utils.FileUtils;
 import com.tomasz.utils.StringUtils;
 
 import static com.tomasz.utils.FacesContextProvider.getExternalContext;
-import static com.tomasz.utils.FacesContextProvider.getFacesContext;
 import static com.tomasz.utils.FacesContextProvider.getSessionAttributes;
-import static com.tomasz.utils.FileUtils.downloadFile;
 
-@ManagedBean(name = "helloWorld", eager = true)
+@ManagedBean(name = "applicationBean", eager = true)
 @SessionScoped
 public class Index {
 

@@ -73,7 +73,7 @@
         <li>
             <a>Menu</a>
             <ul>
-                <li><h:commandLink value="Download PDF" action="#{helloWorld.downloadTestFile()}" /></li>
+                <li><h:commandLink value="Download PDF" action="#{applicationBean.downloadTestFile()}" /></li>
                 <li><h:commandLink value="Show user info" /></li>
                 <li><a  >Tardy Cases</a></li>
                 <li><a  >Favourtite Cases</a></li>
@@ -89,8 +89,8 @@
             <a>Profile</a>
 
             <ul>
-                <li><h:commandLink value="Show user info" action="#{helloWorld.showUserInfo}"/></li>
-                <li><h:commandLink value="Log Out" action="#{helloWorld.handleLogout}"/></li>
+                <li><h:commandLink value="Show user info" action="#{applicationBean.showUserInfo}"/></li>
+                <li><h:commandLink value="Log Out" action="#{applicationBean.handleLogout}"/></li>
             </ul>
         </li>
     </ul>
