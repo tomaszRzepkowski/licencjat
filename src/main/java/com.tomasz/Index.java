@@ -36,7 +36,7 @@ public class Index {
 
     public Index() {
         context = ApplicationContextProvider.getApplicationContext();
-        controller = (UserController) context.getBean(UserController.class);
+        controller = context.getBean(UserController.class);
         logger.info("HelloWorld started!");
     }
 

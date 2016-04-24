@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+
+<h:body>
+    <ui:composition template="templates/master.xhtml">
+        <ui:define name="header">
+        </ui:define>
+        <ui:define name="content">
+            <div class="createNewUser text-center">
+                <h2 class="label-info">Create new user</h2>
+                <h:form id="createUserForm" prependId="false" styleClass="form-group">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <h:outputLabel value="Name:" />
+                            <h:inputText id="nameInput" styleClass="input-sm form-control" binding="#{newUserBean.newUserDTO.name}"/>
+                        </div>
+                        <div class="row">
+                            <h:outputLabel value="Last Name:" />
+                            <h:inputText id="lastNameInput" styleClass="input-sm form-control" binding="#{newUserBean.newUserDTO.lastName}"/>
+                        </div>
+                        <div class="row">
+                            <h:outputLabel value="Address 1:" />
+                            <h:inputText id="address1Input" styleClass="input-sm form-control" binding="#{newUserBean.newUserDTO.address1}"/>
+                        </div>
+                        <div class="row">
+                            <h:outputLabel value="Address 2:" />
+                            <h:inputText id="address2Input" styleClass="input-sm form-control" binding="#{newUserBean.newUserDTO.address2}"/>
+                        </div>
+                        <div class="row">
+                            <h:outputLabel value="City:" />
+                            <h:inputText id="cityInput" styleClass="input-sm form-control" binding="#{newUserBean.newUserDTO.city}"/>
+                        </div>
+                        <div class="row">
+                            <h:outputLabel value="Birth Date:" />
+                            <input id="dateInput" class="input-sm form-control" type="date" value="#{newUserBean.dateString}"/>
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <h:outputLabel value="Username:" />
+                            <h:inputText styleClass="input-sm form-control" binding="#{newUserBean.newUserDTO.username}"/>
+                        </div>
+                        <div class="row #{newUserBean.newUserDTO.emailValid eq true ? '' : 'has-error'}">
+                            <h:outputLabel value="E-mail:" />
+                            <h:inputText id="mailInput" styleClass="input-sm form-control" binding="#{newUserBean.newUserDTO.email}"/>
+                        </div>
+                        <div class="row">
+                            <h:outputLabel value="E-mail (repeat):" />
+                            <h:inputText id="mailRepeat" styleClass="input-sm form-control"/>
+                        </div>
+                        <div class="row">
+                            <h:outputLabel value="Password:" />
+                            <h:inputText id="passwordInput" styleClass="input-sm form-control" binding="#{newUserBean.newUserDTO.password}"/>
+                        </div>
+                        <div class="row">
+                            <h:outputLabel value="Password (repeat):" />
+                            <h:inputText id="passwordRepeat" styleClass="input-sm form-control"/>
+                        </div>
+                        <div class="row padding-horizontal-15px">
+                            <!--TODO czeba validacje naprawic, one sa wymagane wiec nie odpala sie nawet akcja do serwera-->
+                            <a4j:commandButton id="createNewUser2" execute="@form" render="@all"
+                                             action="#{newUserBean.validate}"
+                                             styleClass="btn btn-primary" value="Create"/>
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                </h:form>
+                <h:form id="loginForm" method="post" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">Username</label>
+                        <div class="col-xs-5">
+                            <h:inputText type="text" class="form-control" name="username" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">Password</label>
+                        <div class="col-xs-5">
+                            <h:inputText type="password" class="form-control" name="password" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-9 col-xs-offset-3">
+                            <a4j:commandButton execute="@form" render="@all" type="submit" class="btn btn-primary" value="Siema"/>
+                        </div>
+                    </div>
+                </h:form>
+
+                <script type="text/javascript">
+                    $(document).ready(function() {
+                        $('#loginForm').formValidation({
+                            framework: 'bootstrap',
+                            icon: {
+                                valid: 'glyphicon glyphicon-ok',
+                                invalid: 'glyphicon glyphicon-remove',
+                                validating: 'glyphicon glyphicon-refresh'
+                            },
+                            fields: {
+                                username: {
+                                    validators: {
+                                        notEmpty: {
+                                            message: 'The username is required'
+                                        },
+                                        stringLength: {
+                                            min: 6,
+                                            max: 30,
+                                            message: 'The username must be more than 6 and less than 30 characters long'
+                                        },
+                                        regexp: {
+                                            regexp: /^[a-zA-Z0-9_\.]+$/,
+                                            message: 'The username can only consist of alphabetical, number, dot and underscore'
+                                        }
+                                    }
+                                },
+                                password: {
+                                    validators: {
+                                        notEmpty: {
+                                            message: 'The password is required'
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    });
+                </script>
+            </div>
+        </ui:define>
+        <ui:define name="messages">
+            <h:panelGroup id="messagesContainer" rendered="true">
+                <h:panelGroup rendered="true">
+                    <div class="alert alert-success"></div>
+                </h:panelGroup>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</h:body>
+
+</html>

@@ -21,17 +21,17 @@
                 Please log in:
                 <div class="row">
                     <div class="col-md-12 padding-horizontal-5px">
-                        <h:inputText id="userLogin" value="#{applicationBean.userLogin}"/>
+                        <h:inputText id="userLogin" styleClass="input-sm" value="#{applicationBean.userLogin}"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 padding-horizontal-5px">
-                        <h:inputSecret id="userPassword" value="#{applicationBean.userPassword}"/>
+                        <h:inputSecret id="userPassword" styleClass="input-sm" value="#{applicationBean.userPassword}"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 padding-horizontal-5px">
-                        <h:commandButton id="loginButton" value="Log In"
+                        <h:commandButton id="loginButton" value="Log In" styleClass="btn btn-default"
                                            action="#{applicationBean.handleLogin}" >
                             <f:setPropertyActionListener value="true" target="#{applicationBean.loginButtonClicked}"/>
                         </h:commandButton>
@@ -46,8 +46,12 @@
                         }
                     }
                 </script>
+                <h:form>
+                    <div class="btn btn-link">
+                        <h:link value="Create New User" outcome="createNewUser"/>
+                    </div>
+                </h:form>
             </div>
-
         </ui:define>
         <ui:define name="messages">
             <h:panelGroup id="messagesContainer" rendered="#{applicationBean.loginButtonClicked}">

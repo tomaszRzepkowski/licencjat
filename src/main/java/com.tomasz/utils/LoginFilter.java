@@ -38,11 +38,13 @@ public class LoginFilter  implements Filter{
         HttpSession session = request.getSession(false);
 
         String loginURL = request.getContextPath() + "/views/home.xhtml";
+        String newUserURL = request.getContextPath() + "/views/createNewUser.xhtml";
 
         boolean loggedIn = session != null && session.getAttribute("user") != null;
         boolean loginRequest = request.getRequestURI().equals(loginURL);
+        boolean newUserRequest = request.getRequestURI().equals(newUserURL);
 
-        if (loggedIn || loginRequest) {
+        if (loggedIn || loginRequest || newUserRequest) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             response.sendRedirect(loginURL);
