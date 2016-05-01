@@ -33,4 +33,9 @@ public class UserService {
     public void updateUserLoginDate(long userId) {
         userDao.updateUserLoginDate(userId);
     }
+
+    public String createUser(TUserEngine userEngine) {
+        return userDao.createNewUser(userEngine);
+    }
+
 }

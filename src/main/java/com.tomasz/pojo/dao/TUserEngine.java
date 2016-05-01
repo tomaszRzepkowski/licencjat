@@ -7,6 +7,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.tomasz.enums.EUserType;
@@ -17,6 +22,7 @@ import com.tomasz.enums.EUserType;
 @Entity
 @Table(name = "tbl_user", schema = "sm")
 public class TUserEngine {
+
     private long userId;
     private String name;
     private String lastName;
@@ -29,7 +35,11 @@ public class TUserEngine {
     private String password;
     private String email;
     private String phone;
-    private EUserType userType;
+    private String userType;
+
+    @ManyToOne
+    @JoinColumn(name = "class_id_fk")
+    private TClassEngine clazz;
 
     @Id
     @Column(name = "user_id", nullable = false)
@@ -144,11 +154,11 @@ public class TUserEngine {
 
     @Basic
     @Column(name = "user_type", nullable = false, length = 15)
-    public EUserType getUserType() {
+    public String getUserType() {
         return userType;
     }
 
-    public void setUserType(EUserType userType) {
+    public void setUserType(String userType) {
         this.userType = userType;
     }
 

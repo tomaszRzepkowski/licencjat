@@ -76,3 +76,15 @@
 .createNewUser {
     margin: 0 auto;
 }
+
+.displayNone {
+    display: none;
+}
+
+.displayBlock {
+    display: block;
+}
+
+.displayInline {
+    display: inline-flex;
+}

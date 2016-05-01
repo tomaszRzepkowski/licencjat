@@ -1,9 +1,13 @@
 package com.tomasz.pojo.dao;
 
+import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -16,8 +20,12 @@ public class TClassEngine {
     private String name;
     private String description;
 
+    @OneToMany(mappedBy = "clazz")
+    private List<TUserEngine> users;
+
     @Id
     @Column(name = "class_id", nullable = false)
+    @GeneratedValue
     public long getClassId() {
         return classId;
     }

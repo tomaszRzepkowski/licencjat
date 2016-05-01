@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 
 import org.springframework.context.ApplicationContext;
 
@@ -29,7 +30,11 @@ public class NewUserBean {
         controller = context.getBean(NewUserController.class);
     }
 
-    public void validate(){
+    public void saveNewUser() {
+        controller.saveNewUser();
+    }
+
+    public void validate(ComponentSystemEvent event){
         controller.validateNewUserForm();
     }
 
@@ -53,5 +58,9 @@ public class NewUserBean {
 
     public void setValidationErrors(boolean validationErrors) {
         this.validationErrors = validationErrors;
+    }
+
+    public NewUserController getController() {
+        return controller;
     }
 }

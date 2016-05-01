@@ -9,7 +9,6 @@
       xmlns:a4j="http://richfaces.org/a4j"
       xmlns:f="http://java.sun.com/jsf/core">
 
-
 <h:body>
     <ui:composition template="templates/master.xhtml">
         <ui:define name="header">
@@ -17,131 +16,121 @@
         <ui:define name="content">
             <div class="createNewUser text-center">
                 <h2 class="label-info">Create new user</h2>
-                <h:form id="createUserForm" prependId="false" styleClass="form-group">
+                <h:form id="createUserForm" prependId="false" styleClass="form-group"
+                        onkeypress="isFromValid($(this));" onclick="isFromValid($(this));">
                     <div class="col-md-1"></div>
-                    <div class="col-md-4">
+                    <div class="col-md-4" onkeypress="isFromValid($(this));">
                         <div class="row">
                             <h:outputLabel value="Name:" />
-                            <h:inputText id="nameInput" styleClass="input-sm form-control" binding="#{newUserBean.newUserDTO.name}"/>
+                            <h:inputText id="nameInput" styleClass="input-sm form-control"
+                                         value="#{newUserBean.newUserDTO.name}" onkeyup="validateField($(this), nameRegex);"
+                                         onblur="validateField($(this), nameRegex);"
+                                         onchange="capitalize($(this));"/>
                         </div>
                         <div class="row">
                             <h:outputLabel value="Last Name:" />
-                            <h:inputText id="lastNameInput" styleClass="input-sm form-control" binding="#{newUserBean.newUserDTO.lastName}"/>
+                            <h:inputText id="lastNameInput" styleClass="input-sm form-control"
+                                         value="#{newUserBean.newUserDTO.lastName}" onkeyup="validateField($(this), nameRegex);"
+                                         onblur="validateField($(this), nameRegex);"
+                                         onchange="capitalize($(this));"/>
                         </div>
                         <div class="row">
                             <h:outputLabel value="Address 1:" />
-                            <h:inputText id="address1Input" styleClass="input-sm form-control" binding="#{newUserBean.newUserDTO.address1}"/>
+                            <h:inputText id="address1Input" styleClass="input-sm form-control"
+                                         value="#{newUserBean.newUserDTO.address1}" onkeyup="validateField($(this), regularRegex);"
+                                         onblur="validateField($(this), regularRegex);"/>
                         </div>
                         <div class="row">
                             <h:outputLabel value="Address 2:" />
-                            <h:inputText id="address2Input" styleClass="input-sm form-control" binding="#{newUserBean.newUserDTO.address2}"/>
+                            <h:inputText id="address2Input" styleClass="input-sm form-control"
+                                         value="#{newUserBean.newUserDTO.address2}" onkeyup="validateField($(this), addressRegex);"
+                                         onblur="validateField($(this), addressRegex);"/>
                         </div>
                         <div class="row">
                             <h:outputLabel value="City:" />
-                            <h:inputText id="cityInput" styleClass="input-sm form-control" binding="#{newUserBean.newUserDTO.city}"/>
+                            <h:inputText id="cityInput" styleClass="input-sm form-control"
+                                         value="#{newUserBean.newUserDTO.city}" onkeyup="validateField($(this), regularRegex);"
+                                         onblur="validateField($(this), regularRegex);"
+                                         onchange="capitalize($(this));"/>
                         </div>
                         <div class="row">
                             <h:outputLabel value="Birth Date:" />
-                            <input id="dateInput" class="input-sm form-control" type="date" value="#{newUserBean.dateString}"/>
+                            <h:inputText id="dateInput" styleClass="input-sm form-control"
+                                         value="#{newUserBean.newUserDTO.dateString}" onkeyup="validateField($(this), dateRegex);"
+                                         onblur="validateField($(this), dateRegex);"/>
                         </div>
                     </div>
                     <div class="col-md-2"></div>
-                    <div class="col-md-4">
+                    <div class="col-md-4" onkeypress="isFromValid($(this));">
                         <div class="row">
                             <h:outputLabel value="Username:" />
-                            <h:inputText styleClass="input-sm form-control" binding="#{newUserBean.newUserDTO.username}"/>
+                            <h:inputText id="usernameInput" styleClass="input-sm form-control"
+                                         value="#{newUserBean.newUserDTO.username}" onkeyup="validateField($(this), usernameRegex);"
+                                         onblur="validateField($(this), usernameRegex);"/>
                         </div>
-                        <div class="row #{newUserBean.newUserDTO.emailValid eq true ? '' : 'has-error'}">
+                        <div class="row">
                             <h:outputLabel value="E-mail:" />
-                            <h:inputText id="mailInput" styleClass="input-sm form-control" binding="#{newUserBean.newUserDTO.email}"/>
+                            <h:inputText id="mailInput" styleClass="input-sm form-control"
+                                         value="#{newUserBean.newUserDTO.email}" onkeyup="validateField($(this), emailRegex);"
+                                         onblur="validateField($(this), emailRegex);"/>
                         </div>
                         <div class="row">
                             <h:outputLabel value="E-mail (repeat):" />
-                            <h:inputText id="mailRepeat" styleClass="input-sm form-control"/>
+                            <h:inputText id="mailRepeat" styleClass="input-sm form-control" onkeyup="validateMatching($('#mailInput'), $(this));"
+                                         onblur="validateMatching($('#mailInput'), $(this));"/>
                         </div>
                         <div class="row">
                             <h:outputLabel value="Password:" />
-                            <h:inputText id="passwordInput" styleClass="input-sm form-control" binding="#{newUserBean.newUserDTO.password}"/>
+                            <h:inputSecret id="passwordInput" styleClass="input-sm form-control"
+                                           value="#{newUserBean.newUserDTO.password}" onkeyup="validateField($(this), passwordRegex);"
+                                           onblur="validateField($(this), passwordRegex);"/>
                         </div>
                         <div class="row">
                             <h:outputLabel value="Password (repeat):" />
-                            <h:inputText id="passwordRepeat" styleClass="input-sm form-control"/>
+                            <h:inputSecret id="passwordRepeat" styleClass="input-sm form-control" onkeyup="validateMatching($('#passwordInput'), $(this));"
+                                           onblur="validateMatching($('#passwordInput'), $(this));"/>
                         </div>
                         <div class="row padding-horizontal-15px">
-                            <!--TODO czeba validacje naprawic, one sa wymagane wiec nie odpala sie nawet akcja do serwera-->
-                            <a4j:commandButton id="createNewUser2" execute="@form" render="@all"
-                                             action="#{newUserBean.validate}"
-                                             styleClass="btn btn-primary" value="Create"/>
+                            <a4j:commandButton id="createNewUserButton" execute="@form" render="@all"
+                                             action="#{newUserBean.saveNewUser}"
+                                             styleClass="btn btn-primary displayNone" value="Create"/>
+                            <a4j:commandButton id="createNewUserButtonDisabled" execute="@none" render="@none"
+                                               styleClass="btn btn-primary disabled displayInline" value="Create"/>
                         </div>
                     </div>
                     <div class="col-md-1"></div>
                 </h:form>
-                <h:form id="loginForm" method="post" class="form-horizontal">
-                    <div class="form-group">
-                        <label class="col-xs-3 control-label">Username</label>
-                        <div class="col-xs-5">
-                            <h:inputText type="text" class="form-control" name="username" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-xs-3 control-label">Password</label>
-                        <div class="col-xs-5">
-                            <h:inputText type="password" class="form-control" name="password" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-xs-9 col-xs-offset-3">
-                            <a4j:commandButton execute="@form" render="@all" type="submit" class="btn btn-primary" value="Siema"/>
-                        </div>
-                    </div>
-                </h:form>
-
                 <script type="text/javascript">
-                    $(document).ready(function() {
-                        $('#loginForm').formValidation({
-                            framework: 'bootstrap',
-                            icon: {
-                                valid: 'glyphicon glyphicon-ok',
-                                invalid: 'glyphicon glyphicon-remove',
-                                validating: 'glyphicon glyphicon-refresh'
-                            },
-                            fields: {
-                                username: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'The username is required'
-                                        },
-                                        stringLength: {
-                                            min: 6,
-                                            max: 30,
-                                            message: 'The username must be more than 6 and less than 30 characters long'
-                                        },
-                                        regexp: {
-                                            regexp: /^[a-zA-Z0-9_\.]+$/,
-                                            message: 'The username can only consist of alphabetical, number, dot and underscore'
-                                        }
-                                    }
-                                },
-                                password: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'The password is required'
-                                        }
-                                    }
-                                }
-                            }
-                        });
-                    });
+                    var emailRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                    var nameRegex = /^(?=.*[a-zA-Z]{1,})(?=.*[\d]{0,})[a-zA-Z0-9]{1,45}$/;
+                    var usernameRegex = /^(?=.{3,20}$)(?![_.-])(?!.*[_.-]{2})[a-zA-Z0-9_-]+([^._-])$/;
+                    var passwordRegex = /^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$/;
+                    var dateRegex = /^(19[5-9][0-9]|20[0-4][0-9]|2050)-(0[1-9]|1[0-2])-([1-9]|[12][0-9]|3[01])$/;
+                    var regularRegex = /^[a-zA-Z0-9 ]{3,35}$/;
+                    var addressRegex = /^[a-zA-Z0-9 ]{0,35}$/;
+
+                    function resetInput(el) {
+                        el.removeClass('has-error');
+                        el.removeClass('has-success');
+                    }
                 </script>
             </div>
         </ui:define>
         <ui:define name="messages">
             <h:panelGroup id="messagesContainer" rendered="true">
-                <h:panelGroup rendered="true">
-                    <div class="alert alert-success"></div>
+                <div id="messagesDiv" class="alert alert-danger displayNone"></div>
+                <h:panelGroup rendered="#{newUserBean.controller.userExists}">
+                    <div id="userExists" class="alert alert-danger">
+                        <a href="#" class="close" onclick="hideEl($('#userExists'))">&times;</a>
+                        User with given username already exists, please choose other username.
+                    </div>
                 </h:panelGroup>
+                <!--<div id="emailExists" class="alert alert-danger">-->
+                    <!--<h:panelGroup>-->
+                        <!--<a href="#" class="close" onclick="hideEl($('#emailExists'))">&times;</a>-->
+                        <!--E-mail exists in database, please choose other or login with username if you already have one.-->
+                    <!--</h:panelGroup>-->
+                <!--</div>-->
             </h:panelGroup>
         </ui:define>
     </ui:composition>

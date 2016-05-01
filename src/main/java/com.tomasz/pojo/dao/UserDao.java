@@ -1,17 +1,20 @@
 package com.tomasz.pojo.dao;
 
-import sun.util.calendar.CalendarUtils;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.Calendar;
-
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.sun.faces.application.resource.ContractInfo;
 import com.tomasz.utils.DateUtils;
 
 /**
@@ -43,7 +46,20 @@ public class UserDao extends HibernateDaoSupport implements IBaseDao<TUserEngine
 
     @Override
     public void create(TUserEngine newInstance) {
+        Session session = getSessionFactory().openSession();
+        session.save(newInstance);
+        session.close();
+    }
 
+    public String createNewUser(TUserEngine newInstance) {
+        try{
+            Session session = getSessionFactory().openSession();
+            session.save(newInstance);
+            session.close();
+        } catch (ConstraintViolationException e) {
+            return "USER_EXISTS";
+        }
+        return "SUCCESS";
     }
 
     @Override
@@ -78,4 +94,22 @@ public class UserDao extends HibernateDaoSupport implements IBaseDao<TUserEngine
         query.executeUpdate();
         session.close();
     }
+
+    public List<TUserEngine> getAllStudents() {
+        List<TUserEngine> students = new ArrayList<TUserEngine>();
+        Session session = getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(TUserEngine.class, "user")
+                .createAlias("user.userType", "userType")
+                .add(Restrictions.eq("userType", "STUDENT"))
+                .setProjection(Projections.property("userType"));
+        students = (List<TUserEngine>) criteria.list();
+        return students;
+    }
+
+    public void getAllStaffs() {
+        List<TUserEngine> staffs = new ArrayList<TUserEngine>();
+
+    }
+
+
 }
