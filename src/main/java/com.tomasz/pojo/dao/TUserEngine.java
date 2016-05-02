@@ -1,6 +1,7 @@
 package com.tomasz.pojo.dao;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -40,6 +41,9 @@ public class TUserEngine {
     @ManyToOne
     @JoinColumn(name = "class_id_fk")
     private TClassEngine clazz;
+
+    @OneToMany(mappedBy = "user")
+    private List<TUserSubjectEngine> subjects;
 
     @Id
     @Column(name = "user_id", nullable = false)
