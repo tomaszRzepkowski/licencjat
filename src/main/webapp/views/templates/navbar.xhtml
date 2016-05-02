@@ -75,12 +75,13 @@
             <ul>
                 <li><h:commandLink value="Download PDF" action="#{applicationBean.downloadTestFile()}" /></li>
                 <li><h:commandLink value="Show user info" /></li>
-                <li><a  >Tardy Cases</a></li>
-                <li><a  >Favourtite Cases</a></li>
-                <li><a  >Recent Cases</a>
+                <li><h:commandLink value="Your class" /></li>
+                <li><h:link value="Marks" outcome="marks"/></li>
+                <!--Staff Only-->
+                <li><h:commandLink value="Your classes" />
                     <ul>
-                        <li><a>15-32134</a></li>
-                        <li><a>13-55542</a></li>
+                        <li><h:commandLink value="Class - 1A" /></li>
+                        <li><h:commandLink value="Class - 1B" /></li>
                     </ul>
                 </li>
             </ul>
