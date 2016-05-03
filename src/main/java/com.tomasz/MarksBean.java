@@ -1,5 +1,6 @@
 package com.tomasz;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -20,7 +21,7 @@ import com.tomasz.utils.FacesContextProvider;
  */
 @ManagedBean(name = "marksBean")
 @ViewScoped
-public class MarksBean {
+public class MarksBean implements Serializable{
 
     ApplicationContext context;
     MarksController controller;
@@ -45,12 +46,17 @@ public class MarksBean {
         return controller.getSubjectsForUser(username);
     }
 
-    public String getMarksForSelectedSubject() {
-        Long subjectId = 1L;
+    public void getMarksForSelectedSubject() {
+        Long subjectId = selectedSubject;
         LoginDTO user = (LoginDTO) FacesContextProvider.getSessionAttributes().get("user");
         Long userId = user.getUserId();
         marksForSubject = controller.getMarksForSubject(userId, subjectId);
-        return "SUCCESS";
+    }
+
+    public void getMarksForAllSubjects() {
+        LoginDTO user = (LoginDTO) FacesContextProvider.getSessionAttributes().get("user");
+        Long userId = user.getUserId();
+        marksForSubject = controller.getMarksForAllSubjects(userId);
     }
 
     public List<MarksDTO> getMarksForSubject() {

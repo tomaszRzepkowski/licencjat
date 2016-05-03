@@ -25,4 +25,8 @@ public class MarksController {
     public List<MarksDTO> getMarksForSubject(Long userId, Long subjectId) {
         return markService.getMarksForSubject(userId, subjectId);
     }
+
+    public List<MarksDTO> getMarksForAllSubjects(Long userId) {
+        return markService.getMarksForAllSubjects(userId);
+    }
 }

@@ -35,19 +35,43 @@ public class SubjectDao extends HibernateDaoSupport{
         return list;
     }
 
+
+
     public List<MarksDTO> getMarksForSubject(Long userId, Long subjectId) {
         Session session = getSessionFactory().openSession();
-        String sql = "select um.mark as mark, um.mark_type as markType, um.mark_string as markString, um.issued_date as issuedDate, um.notes as notes  \n" +
-                "from tbl_user_marks um join tbl_user_subject us on  us.user_subject_id = um.user_subject_id_fk\n" +
+        String sql = "select um.mark as mark, um.mark_type as markType, um.mark_string as markString, um.issued_date as issuedDate, um.notes as notes, u.name as issuedByName, u.last_name as issuedByLastName  \n" +
+                "from tbl_user_marks um join tbl_user_subject us on  us.user_subject_id = um.user_subject_id_fk join tbl_user u on u.user_id = um.issued_by_id_fk\n" +
                 "where us.user_id_fk = :userId and us.subject_id_fk = :subjectId";
         List<MarksDTO> marksDTOs = session.createSQLQuery(sql)
                 .addScalar("mark",Hibernate.STRING)
                 .addScalar("markString", Hibernate.STRING)
                 .addScalar("markType", Hibernate.STRING)
+                .addScalar("issuedByName", Hibernate.STRING)
+                .addScalar("issuedByLastName", Hibernate.STRING)
                 .addScalar("issuedDate", Hibernate.DATE)
                 .addScalar("notes", Hibernate.STRING)
                 .setString("userId", userId.toString())
                 .setString("subjectId", subjectId.toString())
+                .setResultTransformer(Transformers.aliasToBean(MarksDTO.class))
+                .list();
+        session.close();
+        return marksDTOs;
+    }
+
+    public List<MarksDTO> getMarksForAllSubjects(Long userId) {
+        Session session = getSessionFactory().openSession();
+        String sql = "select um.mark as mark, um.mark_type as markType, um.mark_string as markString, um.issued_date as issuedDate, um.notes as notes, u.name as issuedByName, u.last_name as issuedByLastName  \n" +
+                "from tbl_user_marks um join tbl_user_subject us on  us.user_subject_id = um.user_subject_id_fk join tbl_user u on u.user_id = um.issued_by_id_fk\n" +
+                "where us.user_id_fk = :userId";
+        List<MarksDTO> marksDTOs = session.createSQLQuery(sql)
+                .addScalar("mark",Hibernate.STRING)
+                .addScalar("markString", Hibernate.STRING)
+                .addScalar("markType", Hibernate.STRING)
+                .addScalar("issuedByName", Hibernate.STRING)
+                .addScalar("issuedByLastName", Hibernate.STRING)
+                .addScalar("issuedDate", Hibernate.DATE)
+                .addScalar("notes", Hibernate.STRING)
+                .setString("userId", userId.toString())
                 .setResultTransformer(Transformers.aliasToBean(MarksDTO.class))
                 .list();
         session.close();

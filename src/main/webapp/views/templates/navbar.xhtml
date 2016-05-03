@@ -1,5 +1,5 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="http://richfaces.org/a4j">
 <body>
 <style type="text/css">
     /*Green Bar stick to top window border*/
@@ -93,7 +93,8 @@
 
             <ul>
                 <li><h:commandLink value="Show user info" action="#{applicationBean.showUserInfo}"/></li>
-                <li><h:commandLink value="Log Out" action="#{applicationBean.handleLogout}"/></li>
+                <li>
+                    <a4j:commandLink render="@all" execute="@form" value="Log Out" action="#{applicationBean.handleLogout}" immediate="true"/></li>
             </ul>
         </li>
     </ul>

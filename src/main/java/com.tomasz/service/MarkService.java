@@ -25,4 +25,8 @@ public class MarkService {
     public List<MarksDTO> getMarksForSubject(Long userId, Long subjectId) {
         return subjectDao.getMarksForSubject(userId, subjectId);
     }
+
+    public List<MarksDTO> getMarksForAllSubjects(Long userId) {
+        return subjectDao.getMarksForAllSubjects(userId);
+    }
 }

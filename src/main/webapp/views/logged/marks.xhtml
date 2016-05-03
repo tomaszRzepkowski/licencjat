@@ -16,13 +16,22 @@
                 <h:form id="marksForm" name="marksForm">
                     <div class="row">
                         <div class="col-md-2">
-                            <h:outputLabel for="chooseSubject" value="Choose Subject"/>
                             <a4j:jsFunction name="showDataForSubject"
-                                            action="#{marksBean.getMarksForSelectedSubject}" render="@all" execute="@all"/>
-                            <h:selectOneMenu id="chooseSubject" styleClass="form-control" onchange="showDataForSubject();"
-                                             value="#{marksBean.selectedSubject}">
-                                <f:selectItems value="#{marksBean.userSubjects}" var="subject" itemLabel="#{subject.name}" itemValue="#{subject.subjectId}"/>
-                            </h:selectOneMenu>
+                                            action="#{marksBean.getMarksForSelectedSubject}" render="@form" execute="@form"/>
+                            <a4j:jsFunction name="showDataForAllSubjects"
+                                            action="#{marksBean.getMarksForAllSubjects}" render="@form" execute="@form"/>
+                            <div class="row padding-horizontal-5px">
+                                <h:outputLabel for="chooseSubject" value="Choose Subject"/>
+                            </div>
+                            <div class="row padding-horizontal-5px">
+                                <a4j:commandButton styleClass="btn btn-primary" value="Show All Marks" onclick="showDataForAllSubjects();"/>
+                            </div>
+                            <div class="row padding-horizontal-5px">
+                                <h:selectOneMenu id="chooseSubject" styleClass="form-control" onchange="showDataForSubject();"
+                                                 value="#{marksBean.selectedSubject}">
+                                    <f:selectItems value="#{marksBean.userSubjects}" var="subject" itemLabel="#{subject.name}" itemValue="#{subject.subjectId}"/>
+                                </h:selectOneMenu>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -46,7 +55,7 @@
                                     <td>#{marks.mark} (#{marks.markString})</td>
                                     <td>#{marks.markType}</td>
                                     <td>#{marks.issuedDate}</td>
-                                    <td>#{marks.issuedById}</td>
+                                    <td>#{marks.issuedByName} #{marks.issuedByLastName}</td>
                                     <td>#{marks.notes}</td>
                                 </tr>
                             </ui:repeat>

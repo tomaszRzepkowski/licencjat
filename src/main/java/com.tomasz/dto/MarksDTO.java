@@ -13,6 +13,8 @@ public class MarksDTO {
 
     private Long studentId;
     private Long issuedById;
+    private String issuedByName;
+    private String issuedByLastName;
     private String mark;
     private String markString;
     private String markType;
@@ -73,5 +75,21 @@ public class MarksDTO {
 
     public void setMarkType(String markType) {
         this.markType = markType;
+    }
+
+    public String getIssuedByName() {
+        return issuedByName;
+    }
+
+    public void setIssuedByName(String issuedByName) {
+        this.issuedByName = issuedByName;
+    }
+
+    public String getIssuedByLastName() {
+        return issuedByLastName;
+    }
+
+    public void setIssuedByLastName(String issuedByLastName) {
+        this.issuedByLastName = issuedByLastName;
     }
 }

@@ -1,5 +1,6 @@
 package com.tomasz;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.faces.bean.ManagedBean;
@@ -18,7 +19,7 @@ import com.tomasz.utils.ApplicationContextProvider;
  */
 @ManagedBean(name = "newUserBean", eager = true)
 @ViewScoped
-public class NewUserBean {
+public class NewUserBean implements Serializable{
 
     ApplicationContext context;
     NewUserController controller;

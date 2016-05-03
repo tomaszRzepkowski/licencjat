@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.lang.String;
 
 import com.tomasz.beans.UserController;
@@ -15,12 +16,13 @@ import com.tomasz.utils.ApplicationContextProvider;
 import com.tomasz.utils.FileUtils;
 import com.tomasz.utils.StringUtils;
 
+import static com.tomasz.utils.FacesContextProvider.getApplicationAttributes;
 import static com.tomasz.utils.FacesContextProvider.getExternalContext;
 import static com.tomasz.utils.FacesContextProvider.getSessionAttributes;
 
 @ManagedBean(name = "applicationBean", eager = true)
 @SessionScoped
-public class Index {
+public class Index implements Serializable{
 
     ApplicationContext context;
 
@@ -72,6 +74,8 @@ public class Index {
     public String handleLogout() {
         resetParameters();
         getExternalContext().invalidateSession();
+        getApplicationAttributes().remove("user");
+        getSessionAttributes().remove("user");
         return "/views/home.xhtml" + StringUtils.FACES_REDIRECT;
     }
 
