@@ -18,11 +18,7 @@
                         <div class="col-md-2">
                             <h:outputLabel for="chooseSubject" value="Choose Subject"/>
                             <h:selectOneMenu id="chooseSubject" styleClass="form-control">
-                                <f:selectItem id="item1" itemLabel="News" itemValue="1" />
-                                <f:selectItem id="item2" itemLabel="Sports" itemValue="2" />
-                                <f:selectItem id="item3" itemLabel="Music" itemValue="3" />
-                                <f:selectItem id="item4" itemLabel="Java" itemValue="4" />
-                                <f:selectItem id="item5" itemLabel="Web" itemValue="5" />
+                                <f:selectItems value="#{marksBean.userSubjects}" var="subject" itemLabel="#{subject.name}" itemValue="#{subject}"/>
                             </h:selectOneMenu>
                         </div>
                     </div>
@@ -41,14 +37,16 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <ui:repeat value="#{marksBean.userSubjects}" var="subject">
                                 <tr>
-                                    <td>Polski</td>
+                                    <td>#{subject.name}</td>
                                     <td>3+ (Dostateczny)</td>
                                     <td>Kartkówka</td>
                                     <td>2016-05-01</td>
                                     <td>mgr. Marcin Kowalski</td>
-                                    <td></td>
+                                    <td>#{marksBean.siema}</td>
                                 </tr>
+                            </ui:repeat>
                             </tbody>
                         </table>
                         </div>

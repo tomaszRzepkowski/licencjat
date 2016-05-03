@@ -10,17 +10,7 @@ import com.tomasz.pojo.dao.TUserEngine;
  */
 public class MarksDTO {
 
-    private long userId;
-
     private List<TSubjectEngine>  subjectEngines;
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
 
     public List<TSubjectEngine> getSubjectEngines() {
         return subjectEngines;

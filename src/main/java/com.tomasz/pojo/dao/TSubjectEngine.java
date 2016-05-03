@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tbl_subject", schema = "sm", catalog = "")
 public class TSubjectEngine {
-    private long subjectId;
+    private Long subjectId;
     private String name;
 
     @OneToMany(mappedBy = "subject")
@@ -25,11 +25,11 @@ public class TSubjectEngine {
 
     @Id
     @Column(name = "subject_id", nullable = false)
-    public long getSubjectId() {
+    public Long getSubjectId() {
         return subjectId;
     }
 
-    public void setSubjectId(long subjectId) {
+    public void setSubjectId(Long subjectId) {
         this.subjectId = subjectId;
     }
 
