@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
-import com.sun.faces.application.resource.ContractInfo;
 import com.tomasz.utils.DateUtils;
 
 /**
@@ -112,4 +111,12 @@ public class UserDao extends HibernateDaoSupport implements IBaseDao<TUserEngine
     }
 
 
+    public String getUserType(long userId) {
+        Session session = getSessionFactory().openSession();
+        String sql = "SELECT user_type FROM sm.tbl_user where user_id = :userId";
+        String userType = (String) session.createSQLQuery(sql)
+                .setString("userId", String.valueOf(userId))
+                .uniqueResult();
+        return userType;
+    }
 }

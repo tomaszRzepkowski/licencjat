@@ -69,4 +69,8 @@ public class UserController {
         users.add(userByLogin);
         return users;
     }
+
+    public boolean isUserStaff(long userId) {
+        return userService.isUserStaff(userId);
+    }
 }

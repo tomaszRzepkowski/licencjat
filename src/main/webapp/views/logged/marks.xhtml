@@ -13,57 +13,113 @@
     <ui:composition template="../templates/master.xhtml">
         <ui:define name="content">
             <div class="userInfo">
-                <h:form id="marksForm" name="marksForm">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <a4j:jsFunction name="showDataForSubject"
-                                            action="#{marksBean.getMarksForSelectedSubject}" render="@form" execute="@form"/>
-                            <a4j:jsFunction name="showDataForAllSubjects"
-                                            action="#{marksBean.getMarksForAllSubjects}" render="@form" execute="@form"/>
-                            <div class="row padding-horizontal-5px">
-                                <h:outputLabel for="chooseSubject" value="Choose Subject"/>
-                            </div>
-                            <div class="row padding-horizontal-5px">
-                                <a4j:commandButton styleClass="btn btn-primary" value="Show All Marks" onclick="showDataForAllSubjects();"/>
-                            </div>
-                            <div class="row padding-horizontal-5px">
-                                <h:selectOneMenu id="chooseSubject" styleClass="form-control" onchange="showDataForSubject();"
-                                                 value="#{marksBean.selectedSubject}">
-                                    <f:selectItems value="#{marksBean.userSubjects}" var="subject" itemLabel="#{subject.name}" itemValue="#{subject.subjectId}"/>
-                                </h:selectOneMenu>
+                <h:panelGroup rendered="#{applicationBean.userStaff}">
+                    <h:form id="marksForm" name="marksForm">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <a4j:jsFunction name="showDataForSubject"
+                                                action="#{marksBean.getMarksForSelectedSubject}" render="@form" execute="@form"/>
+                                <a4j:jsFunction name="showDataForAllSubjects"
+                                                action="#{marksBean.getMarksForAllSubjects}" render="@form" execute="@form"/>
+                                <div class="row padding-horizontal-5px">
+                                    <h:outputLabel for="chooseSubject" value="Choose Subject"/>
+                                </div>
+                                <div class="row padding-horizontal-5px">
+                                    <a4j:commandButton styleClass="btn btn-primary" value="Show All Marks" onclick="showDataForAllSubjects();"/>
+                                </div>
+                                <div class="row padding-horizontal-5px">
+                                    <h:selectOneMenu id="chooseSubject" styleClass="form-control" onchange="showDataForSubject();"
+                                                     value="#{marksBean.selectedSubject}">
+                                        <f:selectItems value="#{marksBean.userSubjects}" var="subject" itemLabel="#{subject.name}" itemValue="#{subject.subjectId}"/>
+                                    </h:selectOneMenu>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-8 padding-horizontal-15px">
-                        <table class="table table-striped table-bordered dataTable no-footer">
-                            <thead>
-                            <tr>
-                                <th>Subject Name</th>
-                                <th>Mark</th>
-                                <th>Type</th>
-                                <th>Issued date</th>
-                                <th>Issued by</th>
-                                <th>Description</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <ui:repeat value="#{marksBean.marksForSubject}" var="marks">
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8 padding-horizontal-15px">
+                            <table class="table table-striped table-bordered dataTable no-footer">
+                                <thead>
                                 <tr>
-                                    <td>#{marksBean.selectedSubjectForView}</td>
-                                    <td>#{marks.mark} (#{marks.markString})</td>
-                                    <td>#{marks.markType}</td>
-                                    <td>#{marks.issuedDate}</td>
-                                    <td>#{marks.issuedByName} #{marks.issuedByLastName}</td>
-                                    <td>#{marks.notes}</td>
+                                    <th>Subject Name</th>
+                                    <th>Mark</th>
+                                    <th>Type</th>
+                                    <th>Issued date</th>
+                                    <th>Issued by</th>
+                                    <th>Description</th>
                                 </tr>
-                            </ui:repeat>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                <ui:repeat value="#{marksBean.marksForSubject}" var="marks">
+                                    <tr>
+                                        <td>#{marksBean.selectedSubjectForView}</td>
+                                        <td>#{marks.mark} (#{marks.markString})</td>
+                                        <td>#{marks.markType}</td>
+                                        <td>#{marks.issuedDate}</td>
+                                        <td>#{marks.issuedByName} #{marks.issuedByLastName}</td>
+                                        <td>#{marks.notes}</td>
+                                    </tr>
+                                </ui:repeat>
+                                </tbody>
+                            </table>
+                            </div>
                         </div>
-                    </div>
-                </h:form>
+                    </h:form>
+                </h:panelGroup>
+                <!--ADMIN PART-->
+                <h:panelGroup rendered="#{not applicationBean.userStaff}">
+                    <h:form id="marksAdminForm" name="marksAdminForm">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <a4j:jsFunction name="showDataForSubject"
+                                                action="#{marksBean.getMarksForSelectedSubject}" render="@form" execute="@form"/>
+                                <a4j:jsFunction name="showDataForAllSubjects"
+                                                action="#{marksBean.getMarksForAllSubjects}" render="@form" execute="@form"/>
+                                <div class="row padding-horizontal-5px">
+                                    <h:outputLabel for="chooseSubject" value="Choose Subject"/>
+                                </div>
+                                <div class="row padding-horizontal-5px">
+                                    <a4j:commandButton styleClass="btn btn-primary" value="Show All Marks" onclick="showDataForAllSubjects();"/>
+                                </div>
+                                <div class="row padding-horizontal-5px">
+                                    <!--<h:selectOneMenu id="chooseSubject" styleClass="form-control" onchange="showDataForSubject();"-->
+                                                     <!--value="#{marksBean.selectedSubject}">-->
+                                        <!--<f:selectItems value="#{marksBean.userSubjects}" var="subject" itemLabel="#{subject.name}" itemValue="#{subject.subjectId}"/>-->
+                                    <!--</h:selectOneMenu>-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8 padding-horizontal-15px">
+                                <table class="table table-striped table-bordered dataTable no-footer">
+                                    <thead>
+                                    <tr>
+                                        <th>Subject Name</th>
+                                        <th>Mark</th>
+                                        <th>Type</th>
+                                        <th>Issued date</th>
+                                        <th>Issued by</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <ui:repeat value="#{marksBean.marksForSubject}" var="marks">
+                                        <tr>
+                                            <td>#{marksBean.selectedSubjectForView}</td>
+                                            <td>#{marks.mark} (#{marks.markString})</td>
+                                            <td>#{marks.markType}</td>
+                                            <td>#{marks.issuedDate}</td>
+                                            <td>#{marks.issuedByName} #{marks.issuedByLastName}</td>
+                                            <td>#{marks.notes}</td>
+                                        </tr>
+                                    </ui:repeat>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </h:form>
+                </h:panelGroup>
             </div>
         </ui:define>
         <ui:define name="messages">

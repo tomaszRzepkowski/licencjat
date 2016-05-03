@@ -79,6 +79,10 @@ public class Index implements Serializable{
         return "/views/home.xhtml" + StringUtils.FACES_REDIRECT;
     }
 
+    public boolean isUserStaff() {
+        return controller.isUserStaff(loginDTO.getUserId());
+    }
+
     public UserController getController() {
         return controller;
     }

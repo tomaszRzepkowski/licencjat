@@ -38,4 +38,7 @@ public class UserService {
         return userDao.createNewUser(userEngine);
     }
 
+    public boolean isUserStaff(long userId) {
+        return userDao.getUserType(userId).equals("TEACHER");
+    }
 }
