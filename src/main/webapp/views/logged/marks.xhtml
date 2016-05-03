@@ -13,12 +13,15 @@
     <ui:composition template="../templates/master.xhtml">
         <ui:define name="content">
             <div class="userInfo">
-                <h:form>
+                <h:form id="marksForm" name="marksForm">
                     <div class="row">
                         <div class="col-md-2">
                             <h:outputLabel for="chooseSubject" value="Choose Subject"/>
-                            <h:selectOneMenu id="chooseSubject" styleClass="form-control">
-                                <f:selectItems value="#{marksBean.userSubjects}" var="subject" itemLabel="#{subject.name}" itemValue="#{subject}"/>
+                            <a4j:jsFunction name="showDataForSubject"
+                                            action="#{marksBean.getMarksForSelectedSubject}" render="@all" execute="@all"/>
+                            <h:selectOneMenu id="chooseSubject" styleClass="form-control" onchange="showDataForSubject();"
+                                             value="#{marksBean.selectedSubject}">
+                                <f:selectItems value="#{marksBean.userSubjects}" var="subject" itemLabel="#{subject.name}" itemValue="#{subject.subjectId}"/>
                             </h:selectOneMenu>
                         </div>
                     </div>
@@ -37,14 +40,14 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <ui:repeat value="#{marksBean.userSubjects}" var="subject">
+                            <ui:repeat value="#{marksBean.marksForSubject}" var="marks">
                                 <tr>
-                                    <td>#{subject.name}</td>
-                                    <td>3+ (Dostateczny)</td>
-                                    <td>Kartkówka</td>
-                                    <td>2016-05-01</td>
-                                    <td>mgr. Marcin Kowalski</td>
-                                    <td>#{marksBean.siema}</td>
+                                    <td>#{marksBean.selectedSubjectForView}</td>
+                                    <td>#{marks.mark} (#{marks.markString})</td>
+                                    <td>#{marks.markType}</td>
+                                    <td>#{marks.issuedDate}</td>
+                                    <td>#{marks.issuedById}</td>
+                                    <td>#{marks.notes}</td>
                                 </tr>
                             </ui:repeat>
                             </tbody>

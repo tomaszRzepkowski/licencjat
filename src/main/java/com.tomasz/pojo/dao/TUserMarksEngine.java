@@ -18,6 +18,7 @@ public class TUserMarksEngine {
     private Date issuedDate;
     private String mark;
     private String markString;
+    private String markType;
     private String notes;
 
     @Id
@@ -48,6 +49,16 @@ public class TUserMarksEngine {
 
     public void setMark(String mark) {
         this.mark = mark;
+    }
+
+    @Basic
+    @Column(name = "mark_type", nullable = false, length = 100)
+    public String getMarkType() {
+        return markType;
+    }
+
+    public void setMarkType(String markType) {
+        this.markType = markType;
     }
 
     @Basic

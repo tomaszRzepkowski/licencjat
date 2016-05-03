@@ -51,6 +51,7 @@ public class UserController {
             loginDTO.setUserFound(true);
             loginDTO.setValidPassword(user.getPassword().equals(password));
             loginDTO.setUsername(login);
+            loginDTO.setUserId(user.getUserId());
             userService.updateUserLoginDate(user.getUserId());
         }
 

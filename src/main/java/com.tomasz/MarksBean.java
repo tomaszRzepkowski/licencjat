@@ -9,6 +9,8 @@ import org.springframework.context.ApplicationContext;
 
 import com.tomasz.beans.MarksController;
 import com.tomasz.dto.LoginDTO;
+import com.tomasz.dto.MarksDTO;
+import com.tomasz.dto.NewUserDTO;
 import com.tomasz.pojo.dao.TSubjectEngine;
 import com.tomasz.utils.ApplicationContextProvider;
 import com.tomasz.utils.FacesContextProvider;
@@ -23,7 +25,9 @@ public class MarksBean {
     ApplicationContext context;
     MarksController controller;
     private List<TSubjectEngine> userSubjects;
+    private List<MarksDTO> marksForSubject;
     private String siema = "Siema";
+    private Long selectedSubject;
 
     public MarksController getController() {
         return controller;
@@ -41,6 +45,22 @@ public class MarksBean {
         return controller.getSubjectsForUser(username);
     }
 
+    public String getMarksForSelectedSubject() {
+        Long subjectId = 1L;
+        LoginDTO user = (LoginDTO) FacesContextProvider.getSessionAttributes().get("user");
+        Long userId = user.getUserId();
+        marksForSubject = controller.getMarksForSubject(userId, subjectId);
+        return "SUCCESS";
+    }
+
+    public List<MarksDTO> getMarksForSubject() {
+        return marksForSubject;
+    }
+
+    public void setMarksForSubject(List<MarksDTO> marksForSubject) {
+        this.marksForSubject = marksForSubject;
+    }
+
     public List<TSubjectEngine> getUserSubjects() {
         return userSubjects;
     }
@@ -55,5 +75,22 @@ public class MarksBean {
 
     public void setSiema(String siema) {
         this.siema = siema;
+    }
+
+    public void setSelectedSubject(Long selectedSubject) {
+        this.selectedSubject = selectedSubject;
+    }
+
+    public Long getSelectedSubject() {
+        return selectedSubject;
+    }
+
+    public String getSelectedSubjectForView(){
+        for(TSubjectEngine engine : userSubjects) {
+            if(engine.getSubjectId().equals(selectedSubject)) {
+                return engine.getName();
+            }
+        }
+        return "Subject not found";
     }
 }
