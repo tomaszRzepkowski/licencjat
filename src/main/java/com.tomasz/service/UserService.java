@@ -1,5 +1,7 @@
 package com.tomasz.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,5 +42,14 @@ public class UserService {
 
     public boolean isUserStaff(long userId) {
         return userDao.getUserType(userId).equals("TEACHER");
+    }
+
+    public void getClassForStaffId(Long staffId) {
+        userDao.getClassForStaffId(staffId);
+    }
+
+    public List<String> getClassmatesForUser(Long userId) {
+        Long classId = userDao.getClassIdForUserId(userId);
+        return userDao.getClassmatesById(classId);
     }
 }

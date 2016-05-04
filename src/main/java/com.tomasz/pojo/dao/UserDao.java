@@ -119,4 +119,31 @@ public class UserDao extends HibernateDaoSupport implements IBaseDao<TUserEngine
                 .uniqueResult();
         return userType;
     }
+
+    public void getClassForStaffId(Long staffId) {
+
+    }
+
+    public Long getClassIdForUserId(Long userId) {
+        Session session = getSessionFactory().openSession();
+        String sql = "SELECT class_id_fk FROM tbl_user where user_id = :userId;";
+        Long classId = (Long) session.createSQLQuery(sql).setString("userId", userId.toString())
+                .uniqueResult();
+        return classId;
+    }
+
+    public void getClassmatesForUser(Long userId) {
+
+    }
+
+    public List<String> getClassmatesById(Long classId) {
+        List<String> result;
+        Session session = getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(TUserEngine.class, "user")
+                .createAlias("user.userType", "userType")
+                .add(Restrictions.eq("userType", "STUDENT"))
+                .setProjection(Projections.property("userType"));
+        result = (List<String>) criteria.list();
+        return result;
+    }
 }

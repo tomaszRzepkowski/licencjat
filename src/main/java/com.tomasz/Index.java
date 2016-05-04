@@ -9,10 +9,13 @@ import org.springframework.context.ApplicationContext;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.String;
+import java.util.List;
 
+import com.tomasz.beans.ClassController;
 import com.tomasz.beans.UserController;
 import com.tomasz.dto.LoginDTO;
 import com.tomasz.utils.ApplicationContextProvider;
+import com.tomasz.utils.FacesContextProvider;
 import com.tomasz.utils.FileUtils;
 import com.tomasz.utils.StringUtils;
 
@@ -29,6 +32,7 @@ public class Index implements Serializable{
     private String userLogin;
     private String userPassword;
     private UserController controller;
+    private ClassController classController;
     private static boolean loginSuccess;
     private boolean loginButtonClicked;
     private LoginDTO loginDTO;
@@ -39,6 +43,7 @@ public class Index implements Serializable{
     public Index() {
         context = ApplicationContextProvider.getApplicationContext();
         controller = context.getBean(UserController.class);
+        classController = context.getBean(ClassController.class);
         logger.info("HelloWorld started!");
     }
 
@@ -69,6 +74,12 @@ public class Index implements Serializable{
     private void resetParameters() {
         loginSuccess = false;
         loginButtonClicked = false;
+    }
+
+    public void getClassmatesForUser() {
+        LoginDTO user = (LoginDTO) FacesContextProvider.getSessionAttributes().get("user");
+        Long userId = user.getUserId();
+        classController.getClassmatesForUser(userId);
     }
 
     public String handleLogout() {
@@ -137,5 +148,13 @@ public class Index implements Serializable{
 
     public String showUserInfo() {
         return "userInfo.xhtml";
+    }
+
+    public ClassController getClassController() {
+        return classController;
+    }
+
+    public void setClassController(ClassController classController) {
+        this.classController = classController;
     }
 }
