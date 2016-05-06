@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.tomasz.enums.EUserType;
 
@@ -176,6 +177,22 @@ public class TUserEngine {
         this.loginDate = loginDate;
     }
 
+    @Transient
+    public TClassEngine getClazz() {
+        return clazz;
+    }
+    @Transient
+    public void setClazz(TClassEngine clazz) {
+        this.clazz = clazz;
+    }
+    @Transient
+    public List<TUserSubjectEngine> getSubjects() {
+        return subjects;
+    }
+    @Transient
+    public void setSubjects(List<TUserSubjectEngine> subjects) {
+        this.subjects = subjects;
+    }
 
     @Override
     public boolean equals(Object o) {

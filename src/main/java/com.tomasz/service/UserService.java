@@ -48,7 +48,7 @@ public class UserService {
         userDao.getClassForStaffId(staffId);
     }
 
-    public List<String> getClassmatesForUser(Long userId) {
+    public List<TUserEngine> getClassmatesForUser(Long userId) {
         Long classId = userDao.getClassIdForUserId(userId);
         return userDao.getClassmatesById(classId);
     }

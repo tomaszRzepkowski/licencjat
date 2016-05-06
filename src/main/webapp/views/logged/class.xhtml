@@ -23,14 +23,18 @@
                                     <th>Classmate name</th>
                                     <th>Last Login</th>
                                     <th>City</th>
+                                    <th>Phone</th>
+                                    <th>Email</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <ui:repeat value="#{applicationBean.classController.classmates}" var="class">
+                                <ui:repeat value="#{classBean.classController.classmates}" var="classmates">
                                     <tr>
-                                        <td>#{class}</td>
-                                        <td>ss</td>
-                                        <td>zzz</td>
+                                        <td>#{classmates.name} #{classmates.lastName}</td>
+                                        <td>#{classmates.loginDate eq null ? "Never logged yet" : classmates.loginDate}</td>
+                                        <td>#{classmates.city}</td>
+                                        <td>#{classmates.phone}</td>
+                                        <td>#{classmates.email}</td>
                                     </tr>
                                 </ui:repeat>
                                 </tbody>

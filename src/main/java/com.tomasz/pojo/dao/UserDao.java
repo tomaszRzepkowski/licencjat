@@ -1,15 +1,18 @@
 package com.tomasz.pojo.dao;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -126,24 +129,32 @@ public class UserDao extends HibernateDaoSupport implements IBaseDao<TUserEngine
 
     public Long getClassIdForUserId(Long userId) {
         Session session = getSessionFactory().openSession();
-        String sql = "SELECT class_id_fk FROM tbl_user where user_id = :userId;";
-        Long classId = (Long) session.createSQLQuery(sql).setString("userId", userId.toString())
+        String sql = "SELECT class_id_fk FROM tbl_user where user_id = :userId";
+        BigInteger classId = (BigInteger) session.createSQLQuery(sql).setString("userId", userId.toString())
                 .uniqueResult();
-        return classId;
+        return classId.longValue();
     }
 
     public void getClassmatesForUser(Long userId) {
 
     }
 
-    public List<String> getClassmatesById(Long classId) {
-        List<String> result;
+    @SuppressWarnings(value = "unchecked")
+    public List<TUserEngine> getClassmatesById(Long classId) {
+        List<TUserEngine> result;
         Session session = getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(TUserEngine.class, "user")
-                .createAlias("user.userType", "userType")
-                .add(Restrictions.eq("userType", "STUDENT"))
-                .setProjection(Projections.property("userType"));
-        result = (List<String>) criteria.list();
+        String sql = "SELECT user_id as userId, name, last_name as lastName, city, email, phone, login_date as loginDate FROM tbl_user where user_type = 'STUDENT' and class_id_fk = :classId";
+        result = (List<TUserEngine>) session.createSQLQuery(sql)
+                .addScalar("userId", Hibernate.LONG)
+                .addScalar("name", Hibernate.STRING)
+                .addScalar("lastName", Hibernate.STRING)
+                .addScalar("city", Hibernate.STRING)
+                .addScalar("phone", Hibernate.STRING)
+                .addScalar("email", Hibernate.STRING)
+                .addScalar("loginDate", Hibernate.STRING)
+                .setString("classId", classId.toString())
+                .setResultTransformer(Transformers.aliasToBean(TUserEngine.class))
+                .list();
         return result;
     }
 }
