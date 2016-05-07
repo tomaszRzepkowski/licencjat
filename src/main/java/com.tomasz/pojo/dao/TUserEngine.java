@@ -8,15 +8,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
-import com.tomasz.enums.EUserType;
 
 /**
  * Created by Tomek on 20.04.2016.
@@ -39,9 +34,8 @@ public class TUserEngine {
     private String phone;
     private String userType;
 
-    @ManyToOne
-    @JoinColumn(name = "class_id_fk")
-    private TClassEngine clazz;
+    @ManyToMany(mappedBy = "classEngine")
+    private List<TUserClassEngine> clazz;
 
     @OneToMany(mappedBy = "user")
     private List<TUserSubjectEngine> subjects;
@@ -177,14 +171,6 @@ public class TUserEngine {
         this.loginDate = loginDate;
     }
 
-    @Transient
-    public TClassEngine getClazz() {
-        return clazz;
-    }
-    @Transient
-    public void setClazz(TClassEngine clazz) {
-        this.clazz = clazz;
-    }
     @Transient
     public List<TUserSubjectEngine> getSubjects() {
         return subjects;

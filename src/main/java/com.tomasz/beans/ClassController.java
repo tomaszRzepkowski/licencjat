@@ -25,6 +25,10 @@ public class ClassController {
         classmates = userService.getClassmatesForUser(userId);
     }
 
+    public void getStudentsForStaff(Long userId) {
+        classmates = userService.getStudentsForStaff(userId);
+    }
+
     public void getClassmatesForCurrentUser() {
         LoginDTO user = (LoginDTO) FacesContextProvider.getSessionAttributes().get("user");
         Long userId = user.getUserId();

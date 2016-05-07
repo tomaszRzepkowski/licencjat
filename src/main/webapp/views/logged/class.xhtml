@@ -13,35 +13,71 @@
     <ui:composition template="../templates/master.xhtml">
         <ui:define name="content">
             <div class="classPage">
+                <h:panelGroup rendered="#{not applicationBean.userStaff}">
                 <h:form id="classForm" name="classForm">
-                    <div class="row">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-8 padding-horizontal-15px">
-                            <table class="table table-striped table-bordered dataTable no-footer">
-                                <thead>
-                                <tr>
-                                    <th>Classmate name</th>
-                                    <th>Last Login</th>
-                                    <th>City</th>
-                                    <th>Phone</th>
-                                    <th>Email</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <ui:repeat value="#{classBean.classController.classmates}" var="classmates">
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8 padding-horizontal-15px">
+                                <table class="table table-striped table-bordered dataTable no-footer">
+                                    <thead>
                                     <tr>
-                                        <td>#{classmates.name} #{classmates.lastName}</td>
-                                        <td>#{classmates.loginDate eq null ? "Never logged yet" : classmates.loginDate}</td>
-                                        <td>#{classmates.city}</td>
-                                        <td>#{classmates.phone}</td>
-                                        <td>#{classmates.email}</td>
+                                        <th>Classmate name</th>
+                                        <th>Last Login</th>
+                                        <th>City</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
                                     </tr>
-                                </ui:repeat>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                    <ui:repeat value="#{classBean.classController.classmates}" var="classmates">
+                                        <tr>
+                                            <td>#{classmates.name} #{classmates.lastName}</td>
+                                            <td>#{classmates.loginDate eq null ? "Never logged yet" : classmates.loginDate}</td>
+                                            <td>#{classmates.city}</td>
+                                            <td>#{classmates.phone}</td>
+                                            <td>#{classmates.email}</td>
+                                        </tr>
+                                    </ui:repeat>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                </h:form>
+                    </h:form>
+                </h:panelGroup>
+                <!--ADMIN PART-->
+                <h:panelGroup rendered="#{applicationBean.userStaff}">
+                    <h:form id="classAdminForm" name="classAdminForm">
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8 padding-horizontal-15px">
+                                <table class="table table-striped table-bordered dataTable no-footer">
+                                    <thead>
+                                    <tr>
+                                        <th>Student name</th>
+                                        <th>Last Login</th>
+                                        <th>City</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                        <th>Edit marks</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <ui:repeat value="#{classBean.classController.classmates}" var="classmates">
+                                        <tr>
+                                            <td>#{classmates.name} #{classmates.lastName}</td>
+                                            <td>#{classmates.loginDate eq null ? "Never logged yet" : classmates.loginDate}</td>
+                                            <td>#{classmates.city}</td>
+                                            <td>#{classmates.phone}</td>
+                                            <td>#{classmates.email}</td>
+                                            <td><a>EDIT</a></td>
+                                        </tr>
+                                    </ui:repeat>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </h:form>
+                </h:panelGroup>
             </div>
         </ui:define>
         <ui:define name="messages">

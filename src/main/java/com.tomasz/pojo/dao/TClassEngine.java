@@ -1,6 +1,7 @@
 package com.tomasz.pojo.dao;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -20,8 +21,8 @@ public class TClassEngine {
     private String name;
     private String description;
 
-    @OneToMany(mappedBy = "clazz")
-    private List<TUserEngine> users;
+    @OneToMany(mappedBy = "classEngine")
+    private List<TUserClassEngine> userClass;
 
     @Id
     @Column(name = "class_id", nullable = false)

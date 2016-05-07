@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.tomasz.beans.ClassController;
 import com.tomasz.beans.MarksController;
+import com.tomasz.beans.UserController;
 import com.tomasz.dto.LoginDTO;
 import com.tomasz.dto.MarksDTO;
 import com.tomasz.pojo.dao.TSubjectEngine;
@@ -35,7 +36,12 @@ public class ClassBean {
     public void getClassmatesForUser() {
         LoginDTO user = (LoginDTO) FacesContextProvider.getSessionAttributes().get("user");
         Long userId = user.getUserId();
-        classController.getClassmatesForUser(userId);
+        UserController userController = context.getBean(UserController.class);
+        if(userController.isUserStaff(userId)) {
+            classController.getStudentsForStaff(userId);
+        } else {
+            classController.getClassmatesForUser(userId);
+        }
     }
 
     public ClassController getClassController() {

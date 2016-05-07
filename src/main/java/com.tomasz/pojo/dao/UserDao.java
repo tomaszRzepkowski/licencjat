@@ -127,23 +127,34 @@ public class UserDao extends HibernateDaoSupport implements IBaseDao<TUserEngine
 
     }
 
-    public Long getClassIdForUserId(Long userId) {
+    @SuppressWarnings(value = "unchecked")
+    public List<Long> getClassIdForUserId(Long userId) {
         Session session = getSessionFactory().openSession();
-        String sql = "SELECT class_id_fk FROM tbl_user where user_id = :userId";
-        BigInteger classId = (BigInteger) session.createSQLQuery(sql).setString("userId", userId.toString())
-                .uniqueResult();
-        return classId.longValue();
-    }
-
-    public void getClassmatesForUser(Long userId) {
-
+        String sql = "SELECT uc.class_id_fk FROM tbl_user u join tbl_user_class uc on u.user_id = uc.user_id_fk\n" +
+                "where uc.user_id_fk = :userId";
+        List<BigInteger> classId = (List<BigInteger>) session.createSQLQuery(sql).setString("userId", userId.toString())
+                .list();
+        List<Long> result = null;
+        if(classId != null && !classId.isEmpty()) {
+            result = new ArrayList<Long>();
+            for(BigInteger value : classId) {
+                result.add(value.longValue());
+            }
+        }
+        return result;
+//        String sql = "SELECT class_id_fk FROM tbl_user where user_id = :userId";
+//        BigInteger classId = (BigInteger) session.createSQLQuery(sql).setString("userId", userId.toString())
+//                .uniqueResult();
+//        return classId.longValue();
     }
 
     @SuppressWarnings(value = "unchecked")
     public List<TUserEngine> getClassmatesById(Long classId) {
         List<TUserEngine> result;
         Session session = getSessionFactory().openSession();
-        String sql = "SELECT user_id as userId, name, last_name as lastName, city, email, phone, login_date as loginDate FROM tbl_user where user_type = 'STUDENT' and class_id_fk = :classId";
+        String sql = "SELECT u.user_id AS userId, name, u.last_name AS lastName, u.city, u.email, u.phone, u.login_date AS loginDate \n" +
+                "FROM tbl_user u JOIN tbl_user_class uc ON u.user_id = uc.user_id_fk\n" +
+                "WHERE u.user_type = 'STUDENT' AND uc.class_id_fk = :classId";
         result = (List<TUserEngine>) session.createSQLQuery(sql)
                 .addScalar("userId", Hibernate.LONG)
                 .addScalar("name", Hibernate.STRING)
@@ -153,6 +164,40 @@ public class UserDao extends HibernateDaoSupport implements IBaseDao<TUserEngine
                 .addScalar("email", Hibernate.STRING)
                 .addScalar("loginDate", Hibernate.STRING)
                 .setString("classId", classId.toString())
+                .setResultTransformer(Transformers.aliasToBean(TUserEngine.class))
+                .list();
+        return result;
+    }
+
+    public List<TClassEngine> getClassesByTeacherId() {
+        List<TClassEngine> result = new ArrayList<TClassEngine>();
+        Session session = getSessionFactory().getCurrentSession();
+        String sql = "";
+        return result;
+    }
+
+    @SuppressWarnings(value = "unchecked")
+    public List<TUserEngine> getClassmatesForTeacherByClassId(List<Long> classId) {
+        List<TUserEngine> result;
+        Session session = getSessionFactory().openSession();
+        String classIds = "";
+        for(Long value : classId) {
+            classIds += value.toString() + ",";
+        }
+        //below it removes last unnecesary ","
+        classIds = classIds.substring(0, classIds.length()-1);
+
+        String sql = "SELECT u.user_id AS userId, name, u.last_name AS lastName, u.city, u.email, u.phone, u.login_date AS loginDate \n" +
+                "FROM tbl_user u JOIN tbl_user_class uc ON u.user_id = uc.user_id_fk\n" +
+                "WHERE u.user_type = 'STUDENT' AND uc.class_id_fk in (" + classIds + ")";
+        result = (List<TUserEngine>) session.createSQLQuery(sql)
+                .addScalar("userId", Hibernate.LONG)
+                .addScalar("name", Hibernate.STRING)
+                .addScalar("lastName", Hibernate.STRING)
+                .addScalar("city", Hibernate.STRING)
+                .addScalar("phone", Hibernate.STRING)
+                .addScalar("email", Hibernate.STRING)
+                .addScalar("loginDate", Hibernate.STRING)
                 .setResultTransformer(Transformers.aliasToBean(TUserEngine.class))
                 .list();
         return result;
