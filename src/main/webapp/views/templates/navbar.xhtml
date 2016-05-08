@@ -1,5 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 <body>
 <style type="text/css">
     /*Green Bar stick to top window border*/
@@ -82,8 +84,9 @@
                 <!--Staff Only-->
                 <li><h:commandLink value="Your classes" />
                     <ul>
-                        <li><h:commandLink value="Class - 1A" /></li>
-                        <li><h:commandLink value="Class - 1B" /></li>
+                        <ui:repeat value="#{applicationBean.classController.classes}" var="clazz">
+                        <li><h:commandLink value="Class - #{clazz.name}"/></li>
+                        </ui:repeat>
                     </ul>
                 </li>
             </ul>

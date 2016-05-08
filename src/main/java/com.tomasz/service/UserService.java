@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tomasz.pojo.dao.TClassEngine;
 import com.tomasz.pojo.dao.TUserEngine;
 import com.tomasz.pojo.dao.UserDao;
 
@@ -56,5 +57,10 @@ public class UserService {
     public List<TUserEngine> getStudentsForStaff(Long userId) {
         List<Long> classId = userDao.getClassIdForUserId(userId);
         return userDao.getClassmatesForTeacherByClassId(classId);
+    }
+
+    public List<TClassEngine> getClasses(Long userId) {
+        List<TClassEngine> classes = userDao.getClasses(userId);
+        return classes;
     }
 }

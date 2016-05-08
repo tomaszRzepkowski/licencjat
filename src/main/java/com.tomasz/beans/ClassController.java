@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.tomasz.dto.LoginDTO;
+import com.tomasz.pojo.dao.TClassEngine;
 import com.tomasz.pojo.dao.TUserEngine;
 import com.tomasz.service.UserService;
 import com.tomasz.utils.FacesContextProvider;
@@ -20,6 +21,7 @@ public class ClassController {
     UserService userService;
 
     private List<TUserEngine> classmates;
+    private List<TClassEngine> classes;
 
     public void getClassmatesForUser(Long userId) {
         classmates = userService.getClassmatesForUser(userId);
@@ -45,5 +47,17 @@ public class ClassController {
 
     public void setClassmates(List<TUserEngine> classmates) {
         this.classmates = classmates;
+    }
+
+    public void getClasses(Long userId) {
+        classes = userService.getClasses(userId);
+    }
+
+    public List<TClassEngine> getClasses() {
+        return classes;
+    }
+
+    public void setClasses(List<TClassEngine> classes) {
+        this.classes = classes;
     }
 }

@@ -13,6 +13,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.transform.Transformers;
+import org.hibernate.type.StringType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -82,7 +83,7 @@ public class UserDao extends HibernateDaoSupport implements IBaseDao<TUserEngine
     public TUserEngine getUserByLogin(String login) {
         Session session = getSessionFactory().openSession();
         TUserEngine engine = (TUserEngine) session.createCriteria(TUserEngine.class)
-                .add(Restrictions.like("username", login))
+                .add(Restrictions.sqlRestriction("username = ? collate utf8_bin", login, new StringType()))
                 .uniqueResult();
         return engine;
     }
@@ -200,6 +201,23 @@ public class UserDao extends HibernateDaoSupport implements IBaseDao<TUserEngine
                 .addScalar("loginDate", Hibernate.STRING)
                 .setResultTransformer(Transformers.aliasToBean(TUserEngine.class))
                 .list();
+        session.close();
+        return result;
+    }
+
+    @SuppressWarnings(value = "unchecked")
+    public List<TClassEngine> getClasses(Long userId) {
+        Session session = getSessionFactory().openSession();
+        String sql = "SELECT c.class_id as classId, c.name as name, c.description FROM tbl_class c join tbl_user_class uc on c.class_id = uc.class_id_fk \n" +
+                "where user_id_fk = :userId";
+        List<TClassEngine> result = session.createSQLQuery(sql)
+                .addScalar("classId", Hibernate.LONG)
+                .addScalar("name", Hibernate.STRING)
+                .addScalar("description", Hibernate.STRING)
+                .setString("userId", userId.toString())
+                .setResultTransformer(Transformers.aliasToBean(TClassEngine.class))
+                .list();
+        session.close();
         return result;
     }
 }

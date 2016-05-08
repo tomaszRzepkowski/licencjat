@@ -34,7 +34,7 @@ public class TUserEngine {
     private String phone;
     private String userType;
 
-    @ManyToMany(mappedBy = "classEngine")
+    @OneToMany(mappedBy = "classEngine")
     private List<TUserClassEngine> clazz;
 
     @OneToMany(mappedBy = "user")
@@ -178,6 +178,16 @@ public class TUserEngine {
     @Transient
     public void setSubjects(List<TUserSubjectEngine> subjects) {
         this.subjects = subjects;
+    }
+
+    @Transient
+    public List<TUserClassEngine> getClazz() {
+        return clazz;
+    }
+
+    @Transient
+    public void setClazz(List<TUserClassEngine> clazz) {
+        this.clazz = clazz;
     }
 
     @Override

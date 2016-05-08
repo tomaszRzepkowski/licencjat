@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * @author Tomek on 06.05.2016.
@@ -32,6 +33,26 @@ public class TUserClassEngine {
 
     public void setUserClassId(long userClassId) {
         this.userClassId = userClassId;
+    }
+
+    @Transient
+    public TUserEngine getUser() {
+        return user;
+    }
+
+    @Transient
+    public void setUser(TUserEngine user) {
+        this.user = user;
+    }
+
+    @Transient
+    public TClassEngine getClassEngine() {
+        return classEngine;
+    }
+
+    @Transient
+    public void setClassEngine(TClassEngine classEngine) {
+        this.classEngine = classEngine;
     }
 
     @Override

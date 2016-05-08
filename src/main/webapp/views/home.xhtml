@@ -31,7 +31,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 padding-horizontal-5px">
-                        <h:commandButton id="loginButton" value="Log In" styleClass="btn btn-default"
+                        <h:commandButton id="loginButton" value="Log In" styleClass="btn btn-default" immediate="false"
                                            action="#{applicationBean.handleLogin}" >
                             <f:setPropertyActionListener value="true" target="#{applicationBean.loginButtonClicked}"/>
                         </h:commandButton>

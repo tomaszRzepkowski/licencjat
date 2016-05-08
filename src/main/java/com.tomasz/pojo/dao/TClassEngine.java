@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * @author Tomek on 21.04.2016.
@@ -53,6 +54,16 @@ public class TClassEngine {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Transient
+    public List<TUserClassEngine> getUserClass() {
+        return userClass;
+    }
+
+    @Transient
+    public void setUserClass(List<TUserClassEngine> userClass) {
+        this.userClass = userClass;
     }
 
     @Override

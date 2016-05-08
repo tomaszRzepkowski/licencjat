@@ -2,7 +2,9 @@ package com.tomasz;
 
 import java.util.List;
 
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 
 import org.springframework.context.ApplicationContext;
@@ -20,7 +22,7 @@ import com.tomasz.utils.FacesContextProvider;
  * @author Tomek on 05.05.2016.
  */
 @ManagedBean(name = "classBean")
-@ViewScoped
+@SessionScoped
 public class ClassBean {
 
     ApplicationContext context;
@@ -31,6 +33,7 @@ public class ClassBean {
         context = ApplicationContextProvider.getApplicationContext();
         classController = context.getBean(ClassController.class);
         getClassmatesForUser();
+        getStaffClasses();
     }
 
     public void getClassmatesForUser() {
@@ -41,6 +44,15 @@ public class ClassBean {
             classController.getStudentsForStaff(userId);
         } else {
             classController.getClassmatesForUser(userId);
+        }
+    }
+
+    public void getStaffClasses() {
+        LoginDTO user = (LoginDTO) FacesContextProvider.getSessionAttributes().get("user");
+        Long userId = user.getUserId();
+        UserController userController = context.getBean(UserController.class);
+        if(userController.isUserStaff(userId)) {
+            classController.getClasses(userId);
         }
     }
 

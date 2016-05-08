@@ -10,9 +10,11 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.lang.String;
 
+import com.tomasz.beans.ClassController;
 import com.tomasz.beans.UserController;
 import com.tomasz.dto.LoginDTO;
 import com.tomasz.utils.ApplicationContextProvider;
+import com.tomasz.utils.FacesContextProvider;
 import com.tomasz.utils.FileUtils;
 import com.tomasz.utils.StringUtils;
 
@@ -29,6 +31,7 @@ public class Index implements Serializable{
     private String userLogin;
     private String userPassword;
     private UserController controller;
+    private ClassController classController;
     private static boolean loginSuccess;
     private boolean loginButtonClicked;
     private LoginDTO loginDTO;
@@ -39,6 +42,7 @@ public class Index implements Serializable{
     public Index() {
         context = ApplicationContextProvider.getApplicationContext();
         controller = context.getBean(UserController.class);
+        classController = context.getBean(ClassController.class);
         logger.info("HelloWorld started!");
     }
 
@@ -50,6 +54,8 @@ public class Index implements Serializable{
             if(loginDTO.isUserFound() && loginDTO.isValidPassword()) {
                 loginSuccess = true;
                 getSessionAttributes().put("user", loginDTO);
+                getClassmatesForUser();
+                getStaffClasses();
                 return "logged/loggedHome.xhtml";
             }
             loginSuccess = false;
@@ -82,6 +88,29 @@ public class Index implements Serializable{
     public boolean isUserStaff() {
         return controller.isUserStaff(loginDTO.getUserId());
     }
+
+//  CLASS BEAN PART
+    private void getClassmatesForUser() {
+        LoginDTO user = (LoginDTO) FacesContextProvider.getSessionAttributes().get("user");
+        Long userId = user.getUserId();
+        UserController userController = context.getBean(UserController.class);
+        if(userController.isUserStaff(userId)) {
+            classController.getStudentsForStaff(userId);
+        } else {
+            classController.getClassmatesForUser(userId);
+        }
+    }
+
+    private void getStaffClasses() {
+        LoginDTO user = (LoginDTO) FacesContextProvider.getSessionAttributes().get("user");
+        Long userId = user.getUserId();
+        classController.getClasses(userId);
+    }
+
+    public ClassController getClassController() {
+        return classController;
+    }
+    //  CLASS BEAN PART
 
     public UserController getController() {
         return controller;
