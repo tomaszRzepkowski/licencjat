@@ -71,7 +71,12 @@
                                             <td>#{classmates.city}</td>
                                             <td>#{classmates.phone}</td>
                                             <td>#{classmates.email}</td>
-                                            <td><a>EDIT</a></td>
+                                            <td>
+                                                <h:commandLink id="editMarksForUser" action="#{marksBean.editPageRedirect}" immediate="true"
+                                                               actionListener="#{marksBean.prepareEditData}" value="Value">
+                                                <f:attribute name="selectedUserId" value="#{classmates.userId}"/>
+                                                </h:commandLink>
+                                            </td>
                                         </tr>
                                     </ui:repeat>
                                     </tbody>

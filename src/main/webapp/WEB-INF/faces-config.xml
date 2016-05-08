@@ -39,4 +39,13 @@
             <redirect/>
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>../views/logged/class.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{marksBean.editPageRedirect}</from-action>
+            <from-outcome>SUCCESS</from-outcome>
+            <to-view-id>../views/logged/editMarks.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

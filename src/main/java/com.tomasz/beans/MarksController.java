@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.tomasz.dto.EditUserDTO;
 import com.tomasz.dto.MarksDTO;
 import com.tomasz.pojo.dao.TSubjectEngine;
 import com.tomasz.service.MarkService;
@@ -28,5 +29,9 @@ public class MarksController {
 
     public List<MarksDTO> getMarksForAllSubjects(Long userId) {
         return markService.getMarksForAllSubjects(userId);
+    }
+
+    public EditUserDTO getUserDataForEdit(Long userId, Long selectedUserId) {
+        return markService.getDataForEdit(userId, selectedUserId);
     }
 }

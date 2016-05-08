@@ -16,6 +16,28 @@
                 <!--ADMIN PART-->
                 <h:panelGroup rendered="#{applicationBean.userStaff}">
                     <h:form id="editMarksForm" name="editMarksForm">
+                        <div class="row padding-horizontal-15px">
+                            <h:outputLabel value="Issue new mark for #{marksBean.editUserDTO.name} #{marksBean.editUserDTO.lastName}"/>
+                        <br/>
+                            <div class="col-md-2"></div>
+                            <div class="row col-md-8">
+                                <h:outputLabel value="Select subject: "/>
+                                <h:selectOneMenu id="chooseSubject" styleClass="form-control" value="#{marksBean.editUserDTO.subject.subjectId}">
+                                    <f:selectItems value="#{marksBean.editUserDTO.avaliableSubjects}" var="subject"
+                                                   itemValue="#{subject.subjectId}" itemLabel="#{subject.name}"/>
+                                </h:selectOneMenu>
+                                <h:outputLabel value="Choose Mark: "/>
+                                <h:selectOneMenu id="chooseMark" styleClass="form-control" value="#{marksBean.editUserDTO.mark.mark}">
+                                    <f:selectItems value="#{marksBean.avaliableMarks}" var="mark"
+                                                   itemValue="#{mark.id}" itemLabel="#{mark.description}"/>
+                                </h:selectOneMenu>
+                                <h:outputLabel value="Note (Optional)"/>
+                                <h:inputTextarea id="markNote" value="#{marksBean.editUserDTO.mark.notes}" />
+                                <h:outputLabel value="Mark Type"/>
+                                <h:inputText id="markType" value="#{marksBean.editUserDTO.mark.markType}" />
+                                <h:commandButton value="Submit" styleClass="btn btn-primary" action="#{marksBean.addMarkForUser}" />
+                            </div>
+                        </div>
                     </h:form>
                 </h:panelGroup>
             </div>

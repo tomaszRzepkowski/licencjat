@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.tomasz.dto.EditUserDTO;
 import com.tomasz.dto.MarksDTO;
 
 /**
@@ -23,12 +24,28 @@ public class SubjectDao extends HibernateDaoSupport{
         setSessionFactory(sessionFactory);
     }
 
+    @SuppressWarnings("unchecked")
     public List<TSubjectEngine> getSubjectsForUser(String username) {
         Session session = getSessionFactory().openSession();
         String sql = "select s.subject_id as subjectId, s.NAME as name from tbl_user u join tbl_user_subject us on u. user_id = us.user_id_fk join tbl_subject s on us.subject_id_fk = s.subject_id\n" +
                 "where u.username = :userName";
         List<TSubjectEngine> list = session.createSQLQuery(sql).addScalar("subjectId", Hibernate.LONG).addScalar("name", Hibernate.STRING)
                 .setString("userName", username)
+                .setResultTransformer(Transformers.aliasToBean(TSubjectEngine.class))
+                .list();
+        session.close();
+        return list;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<TSubjectEngine> getSubjectsForUserById(Long userId) {
+        Session session = getSessionFactory().openSession();
+        String sql = "select s.subject_id as subjectId, s.NAME as name from tbl_user u join tbl_user_subject us on u. user_id = us.user_id_fk join tbl_subject s on us.subject_id_fk = s.subject_id\n" +
+                "where u.user_id = :userId";
+        List<TSubjectEngine> list = session.createSQLQuery(sql)
+                .addScalar("subjectId", Hibernate.LONG)
+                .addScalar("name", Hibernate.STRING)
+                .setString("userId", userId.toString())
                 .setResultTransformer(Transformers.aliasToBean(TSubjectEngine.class))
                 .list();
         session.close();
@@ -76,5 +93,46 @@ public class SubjectDao extends HibernateDaoSupport{
                 .list();
         session.close();
         return marksDTOs;
+    }
+
+    public void getUserData(EditUserDTO dto, Long userId) {
+        Session session = getSessionFactory().openSession();
+        String sql = "select name, last_name as lastName from tbl_user where user_id = :userId";
+        dto = (EditUserDTO) session.createSQLQuery(sql)
+                .addScalar("name", Hibernate.STRING)
+                .addScalar("lastName", Hibernate.STRING)
+                .setString("userId", userId.toString())
+                .setResultTransformer(Transformers.aliasToBean(EditUserDTO.class))
+                .uniqueResult();
+        session.close();
+    }
+
+    public Long getJointClass(Long userId, Long selectedUserId) {
+        Session session = getSessionFactory().openSession();
+        String sql = "";
+
+
+        session.close();
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<TSubjectEngine> getAvaliableSubjects(Long userId, Long selectedUserId) {
+        Session session = getSessionFactory().openSession();
+        String sql = "select s.subject_id as subjectId, s.NAME as name \n" +
+                "from tbl_user u join tbl_user_subject us on u. user_id = us.user_id_fk join tbl_subject s on us.subject_id_fk = s.subject_id \n" +
+                "where u.user_id = :userId and subject_id in \n" +
+                "( select s.subject_id \n" +
+                "from tbl_user u join tbl_user_subject us on u. user_id = us.user_id_fk join tbl_subject s on us.subject_id_fk = s.subject_id \n" +
+                "where u.user_id = :selectedUserId )";
+        List<TSubjectEngine> result = session.createSQLQuery(sql)
+                .addScalar("subjectId", Hibernate.LONG)
+                .addScalar("name", Hibernate.STRING)
+                .setString("userId", userId.toString())
+                .setString("selectedUserId", selectedUserId.toString())
+                .setResultTransformer(Transformers.aliasToBean(TSubjectEngine.class))
+                .list();
+        session.close();
+        return result;
     }
 }

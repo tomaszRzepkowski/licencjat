@@ -12,7 +12,7 @@
     http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
     <!--<context:component-scan base-package="tomasz.service, tomasz.pojo.dao, tomasz.beans, tomasz.utils,com.tomasz.service, com.tomasz.pojo.dao, com.tomasz.beans, com.tomasz.utils" />-->
-    <context:component-scan base-package="com.tomasz.*, tomasz.*" />
+    <context:component-scan base-package="com.tomasz.beans, tomasz.beans, com.tomasz.service, tomasz.service , com.tomasz.pojo.dao, tomasz.pojo.dao" />
 
     <!-- Database Configuration -->
     <import resource="dataSource.xml" />

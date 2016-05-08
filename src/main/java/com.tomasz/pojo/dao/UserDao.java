@@ -14,8 +14,9 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.StringType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Repository;
 
 import com.tomasz.utils.DateUtils;
@@ -32,10 +33,11 @@ public class UserDao extends HibernateDaoSupport implements IBaseDao<TUserEngine
     }
 
     public void insert(TUserEngine person) {
-        Session session = getSessionFactory().getCurrentSession();
+        Session session = getSessionFactory().openSession();
         session.beginTransaction();
         session.save(person);
         session.getTransaction().commit();
+        session.close();
     }
 
 
@@ -85,6 +87,7 @@ public class UserDao extends HibernateDaoSupport implements IBaseDao<TUserEngine
         TUserEngine engine = (TUserEngine) session.createCriteria(TUserEngine.class)
                 .add(Restrictions.sqlRestriction("username = ? collate utf8_bin", login, new StringType()))
                 .uniqueResult();
+        session.close();
         return engine;
     }
 
@@ -106,6 +109,7 @@ public class UserDao extends HibernateDaoSupport implements IBaseDao<TUserEngine
                 .add(Restrictions.eq("userType", "STUDENT"))
                 .setProjection(Projections.property("userType"));
         students = (List<TUserEngine>) criteria.list();
+        session.close();
         return students;
     }
 
@@ -121,6 +125,7 @@ public class UserDao extends HibernateDaoSupport implements IBaseDao<TUserEngine
         String userType = (String) session.createSQLQuery(sql)
                 .setString("userId", String.valueOf(userId))
                 .uniqueResult();
+        session.close();
         return userType;
     }
 
@@ -142,6 +147,7 @@ public class UserDao extends HibernateDaoSupport implements IBaseDao<TUserEngine
                 result.add(value.longValue());
             }
         }
+        session.close();
         return result;
 //        String sql = "SELECT class_id_fk FROM tbl_user where user_id = :userId";
 //        BigInteger classId = (BigInteger) session.createSQLQuery(sql).setString("userId", userId.toString())
@@ -167,6 +173,7 @@ public class UserDao extends HibernateDaoSupport implements IBaseDao<TUserEngine
                 .setString("classId", classId.toString())
                 .setResultTransformer(Transformers.aliasToBean(TUserEngine.class))
                 .list();
+        session.close();
         return result;
     }
 
