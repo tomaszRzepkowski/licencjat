@@ -11,12 +11,10 @@ import javax.faces.event.ActionEvent;
 
 import org.springframework.context.ApplicationContext;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import com.tomasz.beans.MarksController;
 import com.tomasz.dto.EditUserDTO;
 import com.tomasz.dto.LoginDTO;
 import com.tomasz.dto.MarksDTO;
-import com.tomasz.dto.NewUserDTO;
 import com.tomasz.enums.EMarks;
 import com.tomasz.pojo.dao.TSubjectEngine;
 import com.tomasz.utils.ApplicationContextProvider;
@@ -145,10 +143,12 @@ public class MarksBean implements Serializable{
     }
 
     public String addMarkForUser() {
+        LoginDTO user = (LoginDTO) FacesContextProvider.getSessionAttributes().get("user");
+        Long userId = user.getUserId();
+        editUserDTO.setIssuedByUserId(userId);
         editUserDTO.getMark().setIssuedDate(Date.valueOf(DateUtils.getCurrentDate()));
         editUserDTO.getMark().setMarkString(String.valueOf(EMarks.getMarkById(Integer.parseInt(editUserDTO.getMark().getMark()))));
-        String s = "siema";
-        //TODO dokoncz te metode
+        controller.addMarkForUser(editUserDTO);
         return null;
     }
 }

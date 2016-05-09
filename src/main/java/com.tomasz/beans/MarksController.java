@@ -34,4 +34,9 @@ public class MarksController {
     public EditUserDTO getUserDataForEdit(Long userId, Long selectedUserId) {
         return markService.getDataForEdit(userId, selectedUserId);
     }
+
+    public String addMarkForUser(EditUserDTO editUserDTO) {
+        markService.saveMarkForUser(editUserDTO);
+        return "SUCCESS";
+    }
 }

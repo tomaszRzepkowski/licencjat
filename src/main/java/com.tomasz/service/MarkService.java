@@ -10,6 +10,7 @@ import com.tomasz.dto.MarksDTO;
 import com.tomasz.pojo.dao.SubjectDao;
 import com.tomasz.pojo.dao.TSubjectEngine;
 import com.tomasz.pojo.dao.TUserEngine;
+import com.tomasz.pojo.dao.TUserMarksEngine;
 import com.tomasz.pojo.dao.UserDao;
 
 /**
@@ -67,5 +68,16 @@ public class MarkService {
 
         subjectDao.getJointClass(staff, student);
         return null;
+    }
+
+    public boolean saveMarkForUser(EditUserDTO editUserDTO) {
+        TSubjectEngine subject = editUserDTO.getSubject();
+        Long userId = editUserDTO.getUserId();
+        TUserMarksEngine markEngine = editUserDTO.getMark();
+        markEngine.setIssuedByUserId(editUserDTO.getIssuedByUserId());
+        subjectDao.saveUserMark(markEngine, subject.getSubjectId(), userId);
+
+
+        return true;
     }
 }

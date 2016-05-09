@@ -5,6 +5,7 @@ import java.sql.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,6 +16,8 @@ import javax.persistence.Table;
 @Table(name = "tbl_user_marks", schema = "sm", catalog = "")
 public class TUserMarksEngine {
     private long userMarkId;
+    private long userSubjectId;
+    private long issuedByUserId;
     private Date issuedDate;
     private String mark;
     private String markString;
@@ -23,6 +26,7 @@ public class TUserMarksEngine {
 
     @Id
     @Column(name = "user_mark_id", nullable = false)
+    @GeneratedValue
     public long getUserMarkId() {
         return userMarkId;
     }
@@ -79,6 +83,26 @@ public class TUserMarksEngine {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    @Basic
+    @Column(name = "user_subject_id_fk", nullable = false)
+    public long getUserSubjectId() {
+        return userSubjectId;
+    }
+
+    public void setUserSubjectId(long userSubjectId) {
+        this.userSubjectId = userSubjectId;
+    }
+
+    @Basic
+    @Column(name = "issued_by_id_fk", nullable = false)
+    public long getIssuedByUserId() {
+        return issuedByUserId;
+    }
+
+    public void setIssuedByUserId(long userId) {
+        this.issuedByUserId = userId;
     }
 
     @Override

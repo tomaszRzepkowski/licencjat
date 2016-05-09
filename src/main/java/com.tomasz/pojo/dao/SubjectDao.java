@@ -1,5 +1,6 @@
 package com.tomasz.pojo.dao;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.hibernate.Hibernate;
@@ -134,5 +135,26 @@ public class SubjectDao extends HibernateDaoSupport{
                 .list();
         session.close();
         return result;
+    }
+
+    public Long getUserSubjectIdForUser(Long userId, Long subjectId) {
+        BigInteger result;
+        Session session = getSessionFactory().openSession();
+        String sql = "SELECT user_subject_id FROM tbl_user_subject " +
+                "where user_id_fk = :userId and subject_id_fk = :subjectId";
+        result = (BigInteger) session.createSQLQuery(sql)
+                .setString("userId", userId.toString())
+                .setString("subjectId", subjectId.toString())
+                .uniqueResult();
+        session.close();
+        return result.longValue();
+    }
+
+    public void saveUserMark(TUserMarksEngine markEngine, Long subjectId, Long userId) {
+        Long userSubjectId = getUserSubjectIdForUser(userId, subjectId);
+        Session session = getSessionFactory().openSession();
+        markEngine.setUserSubjectId(userSubjectId);
+        session.save(markEngine);
+        session.close();
     }
 }

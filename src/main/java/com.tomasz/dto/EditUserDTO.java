@@ -14,6 +14,7 @@ public class EditUserDTO {
 
     private Long classId;
     private Long userId;
+    private Long issuedByUserId;
     private String name;
     private String lastName;
     private TUserMarksEngine mark;
@@ -39,6 +40,14 @@ public class EditUserDTO {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getIssuedByUserId() {
+        return issuedByUserId;
+    }
+
+    public void setIssuedByUserId(Long issuedByUserId) {
+        this.issuedByUserId = issuedByUserId;
     }
 
     public String getName() {
