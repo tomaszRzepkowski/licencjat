@@ -29,7 +29,8 @@ public class SubjectDao extends HibernateDaoSupport{
     public List<TSubjectEngine> getSubjectsForUser(String username) {
         Session session = getSessionFactory().openSession();
         String sql = "select s.subject_id as subjectId, s.NAME as name from tbl_user u join tbl_user_subject us on u. user_id = us.user_id_fk join tbl_subject s on us.subject_id_fk = s.subject_id\n" +
-                "where u.username = :userName";
+                "where u.username = :userName \n " +
+                "order by name asc ";
         List<TSubjectEngine> list = session.createSQLQuery(sql).addScalar("subjectId", Hibernate.LONG).addScalar("name", Hibernate.STRING)
                 .setString("userName", username)
                 .setResultTransformer(Transformers.aliasToBean(TSubjectEngine.class))
@@ -62,7 +63,8 @@ public class SubjectDao extends HibernateDaoSupport{
                 "join tbl_user_subject us on  us.user_subject_id = um.user_subject_id_fk " +
                 "join tbl_user u on u.user_id = um.issued_by_id_fk\n" +
                 "join tbl_subject s on s.subject_id = us.subject_id_fk\n" +
-                "where us.user_id_fk = :userId and us.subject_id_fk = :subjectId";
+                "where us.user_id_fk = :userId and us.subject_id_fk = :subjectId \n" +
+                "order by subjectName asc, issuedDate desc";
         List<MarksDTO> marksDTOs = session.createSQLQuery(sql)
                 .addScalar("subjectName",Hibernate.STRING)
                 .addScalar("mark",Hibernate.STRING)
@@ -87,7 +89,8 @@ public class SubjectDao extends HibernateDaoSupport{
                 "join tbl_user_subject us on  us.user_subject_id = um.user_subject_id_fk \n" +
                 "join tbl_user u on u.user_id = um.issued_by_id_fk\n" +
                 "join tbl_subject s on s.subject_id = us.subject_id_fk\n" +
-                "where us.user_id_fk = :userId";
+                "where us.user_id_fk = :userId \n" +
+                "order by subjectName asc, issuedDate desc";
         List<MarksDTO> marksDTOs = session.createSQLQuery(sql)
                 .addScalar("subjectName",Hibernate.STRING)
                 .addScalar("mark",Hibernate.STRING)
@@ -133,7 +136,8 @@ public class SubjectDao extends HibernateDaoSupport{
                 "where u.user_id = :userId and subject_id in \n" +
                 "( select s.subject_id \n" +
                 "from tbl_user u join tbl_user_subject us on u. user_id = us.user_id_fk join tbl_subject s on us.subject_id_fk = s.subject_id \n" +
-                "where u.user_id = :selectedUserId )";
+                "where u.user_id = :selectedUserId ) \n" +
+                "order by name";
         List<TSubjectEngine> result = session.createSQLQuery(sql)
                 .addScalar("subjectId", Hibernate.LONG)
                 .addScalar("name", Hibernate.STRING)

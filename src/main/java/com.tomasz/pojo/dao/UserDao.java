@@ -161,7 +161,8 @@ public class UserDao extends HibernateDaoSupport implements IBaseDao<TUserEngine
         Session session = getSessionFactory().openSession();
         String sql = "SELECT u.user_id AS userId, name, u.last_name AS lastName, u.city, u.email, u.phone, u.login_date AS loginDate \n" +
                 "FROM tbl_user u JOIN tbl_user_class uc ON u.user_id = uc.user_id_fk\n" +
-                "WHERE u.user_type = 'STUDENT' AND uc.class_id_fk = :classId";
+                "WHERE u.user_type = 'STUDENT' AND uc.class_id_fk = :classId \n" +
+                "ORDER BY lastName ASC, name ASC ";
         result = (List<TUserEngine>) session.createSQLQuery(sql)
                 .addScalar("userId", Hibernate.LONG)
                 .addScalar("name", Hibernate.STRING)
@@ -197,7 +198,8 @@ public class UserDao extends HibernateDaoSupport implements IBaseDao<TUserEngine
 
         String sql = "SELECT u.user_id AS userId, name, u.last_name AS lastName, u.city, u.email, u.phone, u.login_date AS loginDate \n" +
                 "FROM tbl_user u JOIN tbl_user_class uc ON u.user_id = uc.user_id_fk\n" +
-                "WHERE u.user_type = 'STUDENT' AND uc.class_id_fk in (" + classIds + ")";
+                "WHERE u.user_type = 'STUDENT' AND uc.class_id_fk in (" + classIds + ") \n" +
+                "ORDER BY lastName ASC , name ASC";
         result = (List<TUserEngine>) session.createSQLQuery(sql)
                 .addScalar("userId", Hibernate.LONG)
                 .addScalar("name", Hibernate.STRING)
@@ -216,7 +218,8 @@ public class UserDao extends HibernateDaoSupport implements IBaseDao<TUserEngine
     public List<TClassEngine> getClasses(Long userId) {
         Session session = getSessionFactory().openSession();
         String sql = "SELECT c.class_id as classId, c.name as name, c.description FROM tbl_class c join tbl_user_class uc on c.class_id = uc.class_id_fk \n" +
-                "where user_id_fk = :userId";
+                "where user_id_fk = :userId \n" +
+                "order by name asc";
         List<TClassEngine> result = session.createSQLQuery(sql)
                 .addScalar("classId", Hibernate.LONG)
                 .addScalar("name", Hibernate.STRING)
