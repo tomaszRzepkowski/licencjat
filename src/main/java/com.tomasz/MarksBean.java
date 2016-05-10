@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
+import org.apache.commons.mail.Email;
 import org.springframework.context.ApplicationContext;
 
 import com.tomasz.beans.MarksController;
@@ -145,10 +146,13 @@ public class MarksBean implements Serializable{
     public String addMarkForUser() {
         LoginDTO user = (LoginDTO) FacesContextProvider.getSessionAttributes().get("user");
         Long userId = user.getUserId();
+        String markId = editUserDTO.getMark().getMark();
+        EMarks markById = EMarks.getMarkById(Integer.parseInt(markId));
         editUserDTO.setIssuedByUserId(userId);
         editUserDTO.getMark().setIssuedDate(Date.valueOf(DateUtils.getCurrentDate()));
-        editUserDTO.getMark().setMarkString(String.valueOf(EMarks.getMarkById(Integer.parseInt(editUserDTO.getMark().getMark()))));
+        editUserDTO.getMark().setMark(markById.getStringValue());
+        editUserDTO.getMark().setMarkString(markById.getDescription());
         controller.addMarkForUser(editUserDTO);
-        return null;
+        return "class.xhtml";
     }
 }

@@ -75,9 +75,8 @@ public class MarkService {
         Long userId = editUserDTO.getUserId();
         TUserMarksEngine markEngine = editUserDTO.getMark();
         markEngine.setIssuedByUserId(editUserDTO.getIssuedByUserId());
+
         subjectDao.saveUserMark(markEngine, subject.getSubjectId(), userId);
-
-
         return true;
     }
 }

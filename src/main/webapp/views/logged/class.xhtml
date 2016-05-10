@@ -73,7 +73,7 @@
                                             <td>#{classmates.email}</td>
                                             <td>
                                                 <h:commandLink id="editMarksForUser" action="#{marksBean.editPageRedirect}" immediate="true"
-                                                               actionListener="#{marksBean.prepareEditData}" value="Value">
+                                                               actionListener="#{marksBean.prepareEditData}" value="EDIT">
                                                 <f:attribute name="selectedUserId" value="#{classmates.userId}"/>
                                                 </h:commandLink>
                                             </td>

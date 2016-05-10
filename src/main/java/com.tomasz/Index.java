@@ -30,6 +30,7 @@ public class Index implements Serializable{
 
     private String userLogin;
     private String userPassword;
+    private String username;
     private UserController controller;
     private ClassController classController;
     private static boolean loginSuccess;
@@ -53,6 +54,7 @@ public class Index implements Serializable{
             userPassword = null;
             if(loginDTO.isUserFound() && loginDTO.isValidPassword()) {
                 loginSuccess = true;
+                username = loginDTO.getUsername();
                 getSessionAttributes().put("user", loginDTO);
                 getClassmatesForUser();
                 getStaffClasses();
@@ -158,6 +160,14 @@ public class Index implements Serializable{
 
     public void setLoginButtonClicked(boolean loginButtonClicked) {
         this.loginButtonClicked = loginButtonClicked;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void downloadTestFile() throws IOException {

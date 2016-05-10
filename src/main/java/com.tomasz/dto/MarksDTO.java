@@ -1,10 +1,6 @@
 package com.tomasz.dto;
 
 import java.util.Date;
-import java.util.List;
-
-import com.tomasz.pojo.dao.TSubjectEngine;
-import com.tomasz.pojo.dao.TUserEngine;
 
 /**
  * @author Tomek on 02.05.2016.
@@ -13,6 +9,7 @@ public class MarksDTO {
 
     private Long studentId;
     private Long issuedById;
+    private String subjectName;
     private String issuedByName;
     private String issuedByLastName;
     private String mark;
@@ -91,5 +88,18 @@ public class MarksDTO {
 
     public void setIssuedByLastName(String issuedByLastName) {
         this.issuedByLastName = issuedByLastName;
+    }
+
+    public String getSubjectName() {
+        return subjectName;
+    }
+
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
+    }
+
+    public boolean getMarkBoolValue() {
+        Integer valueOfMark = Integer.parseInt(String.valueOf(this.mark.charAt(0)));
+        return valueOfMark > 2;
     }
 }
