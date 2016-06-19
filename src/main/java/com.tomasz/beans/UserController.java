@@ -21,15 +21,9 @@ public class UserController {
     UserService userService;
 
     private String name;
+    private TUserEngine user;
 
-    public void siemanko() {
-        String name = userService.getUserByID(1).getName();
-        this.setName(name);
-    }
-
-    public String handleLogin() {
-        //TODO wrzucic robienie query
-        return "";
+    public UserController() {
     }
 
     public String test() {
@@ -62,12 +56,17 @@ public class UserController {
         return userService.getUserByLogin(login);
     }
 
-    public List<TUserEngine> getCurrentUser() {
+    public void getCurrentUser() {
         LoginDTO user = (LoginDTO) FacesContextProvider.getSessionParameter("user");
-        List<TUserEngine> users = new ArrayList<TUserEngine>();
-        TUserEngine userByLogin = userService.getUserByLogin(user.getUsername());
-        users.add(userByLogin);
-        return users;
+        this.user = userService.getUserByLogin(user.getUsername());
+    }
+
+    public TUserEngine getUser() {
+        return user;
+    }
+
+    public void setUser(TUserEngine user) {
+        this.user = user;
     }
 
     public boolean isUserStaff(long userId) {

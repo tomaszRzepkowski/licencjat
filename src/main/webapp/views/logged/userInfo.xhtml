@@ -29,7 +29,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <ui:repeat value="#{applicationBean.controller.currentUser}" var="user">
+                        <ui:repeat value="#{applicationBean.controller.user}" var="user">
                             <tr>
                                 <td>#{user.name}</td>
                                 <td>#{user.lastName}</td>
@@ -45,6 +45,48 @@
                         </ui:repeat>
                     </tbody>
                 </table>
+                <div class="row">
+                    <h:form id="userEditForm" name="userEditForm" prependId="false" styleClass="form-group">
+                        <div class="col-md-6">
+                            <a4j:commandButton styleClass="btn btn-primary" value="Edit profile"/>
+                        </div>
+                        <div class="row padding-horizontal-15px">
+                            <h:panelGroup rendered="true">
+                                <div class="col-sm-6 f-left padding-horizontal-5px">
+                                    <h:outputLabel value="Name"/>
+                                    <h:inputText value="#{applicationBean.controller.user.name}"
+                                                 styleClass="form-control margin-horizontal-5px" disabled="true"/>
+                                    <h:outputLabel value="Last Name"/>
+                                    <h:inputText value="#{applicationBean.controller.user.lastName}"
+                                                 styleClass="form-control margin-horizontal-5px" disabled="true"/>
+                                    <h:outputLabel value="Birth Date"/>
+                                    <h:inputText value="#{applicationBean.controller.user.birthDate}"
+                                                 styleClass="form-control margin-horizontal-5px" disabled="true"/>
+                                    <h:outputLabel value="Username"/>
+                                    <h:inputText value="#{applicationBean.controller.user.username}"
+                                                 styleClass="form-control margin-horizontal-5px" disabled="true"/>
+                                </div>
+                                <div class="col-sm-6 f-right padding-horizontal-5px">
+                                    <h:outputLabel value="Address 1"/>
+                                    <h:inputText value="#{applicationBean.controller.user.address1}"
+                                                 styleClass="form-control margin-horizontal-5px"/>
+                                    <h:outputLabel value="Address 2"/>
+                                    <h:inputText value="#{applicationBean.controller.user.address2}"
+                                                 styleClass="form-control margin-horizontal-5px"/>
+                                    <h:outputLabel value="City"/>
+                                    <h:inputText value="#{applicationBean.controller.user.city}"
+                                                 styleClass="form-control margin-horizontal-5px"/>
+                                    <h:outputLabel value="Phone"/>
+                                    <h:inputText value="#{applicationBean.controller.user.phone}"
+                                                 styleClass="form-control margin-horizontal-5px"/>
+                                    <h:outputLabel value="Email"/>
+                                    <h:inputText value="#{applicationBean.controller.user.email}"
+                                                 styleClass="form-control margin-horizontal-5px"/>
+                                </div>
+                            </h:panelGroup>
+                        </div>
+                    </h:form>
+                </div>
             </div>
         </ui:define>
         <ui:define name="messages">

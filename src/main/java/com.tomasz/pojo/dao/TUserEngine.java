@@ -33,6 +33,7 @@ public class TUserEngine {
     private String email;
     private String phone;
     private String userType;
+    private String className;
 
     @OneToMany(mappedBy = "classEngine")
     private List<TUserClassEngine> clazz;
@@ -169,6 +170,16 @@ public class TUserEngine {
 
     public void setLoginDate(String loginDate) {
         this.loginDate = loginDate;
+    }
+
+    @Transient
+    public String getClassName() {
+        return className;
+    }
+
+    @Transient
+    public void setClassName(String className) {
+        this.className = className;
     }
 
     @Transient

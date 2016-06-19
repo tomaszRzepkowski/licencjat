@@ -7,6 +7,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.transform.Transformers;
+import org.hibernate.type.StandardBasicTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -31,7 +32,9 @@ public class SubjectDao extends HibernateDaoSupport{
         String sql = "select s.subject_id as subjectId, s.NAME as name from tbl_user u join tbl_user_subject us on u. user_id = us.user_id_fk join tbl_subject s on us.subject_id_fk = s.subject_id\n" +
                 "where u.username = :userName \n " +
                 "order by name asc ";
-        List<TSubjectEngine> list = session.createSQLQuery(sql).addScalar("subjectId", Hibernate.LONG).addScalar("name", Hibernate.STRING)
+        List<TSubjectEngine> list = session.createSQLQuery(sql)
+                .addScalar("subjectId", StandardBasicTypes.LONG)
+                .addScalar("name", StandardBasicTypes.STRING)
                 .setString("userName", username)
                 .setResultTransformer(Transformers.aliasToBean(TSubjectEngine.class))
                 .list();
@@ -40,13 +43,30 @@ public class SubjectDao extends HibernateDaoSupport{
     }
 
     @SuppressWarnings("unchecked")
+    public List<TSubjectEngine> getSubjectsForUser(Long userId) {
+        Session session = getSessionFactory().openSession();
+        String sql = "select s.subject_id as subjectId, s.NAME as name from tbl_user u join tbl_user_subject us on u. user_id = us.user_id_fk join tbl_subject s on us.subject_id_fk = s.subject_id\n" +
+                "where u.user_id = :userId \n " +
+                "order by name asc ";
+        List<TSubjectEngine> list = session.createSQLQuery(sql)
+                .addScalar("subjectId", StandardBasicTypes.LONG)
+                .addScalar("name", StandardBasicTypes.STRING)
+                .setString("userId", userId.toString())
+                .setResultTransformer(Transformers.aliasToBean(TSubjectEngine.class))
+                .list();
+        session.close();
+        return list;
+    }
+
+
+    @SuppressWarnings("unchecked")
     public List<TSubjectEngine> getSubjectsForUserById(Long userId) {
         Session session = getSessionFactory().openSession();
         String sql = "select s.subject_id as subjectId, s.NAME as name from tbl_user u join tbl_user_subject us on u. user_id = us.user_id_fk join tbl_subject s on us.subject_id_fk = s.subject_id\n" +
                 "where u.user_id = :userId";
         List<TSubjectEngine> list = session.createSQLQuery(sql)
-                .addScalar("subjectId", Hibernate.LONG)
-                .addScalar("name", Hibernate.STRING)
+                .addScalar("subjectId", StandardBasicTypes.LONG)
+                .addScalar("name", StandardBasicTypes.STRING)
                 .setString("userId", userId.toString())
                 .setResultTransformer(Transformers.aliasToBean(TSubjectEngine.class))
                 .list();
@@ -66,14 +86,14 @@ public class SubjectDao extends HibernateDaoSupport{
                 "where us.user_id_fk = :userId and us.subject_id_fk = :subjectId \n" +
                 "order by subjectName asc, issuedDate desc";
         List<MarksDTO> marksDTOs = session.createSQLQuery(sql)
-                .addScalar("subjectName",Hibernate.STRING)
-                .addScalar("mark",Hibernate.STRING)
-                .addScalar("markString", Hibernate.STRING)
-                .addScalar("markType", Hibernate.STRING)
-                .addScalar("issuedByName", Hibernate.STRING)
-                .addScalar("issuedByLastName", Hibernate.STRING)
-                .addScalar("issuedDate", Hibernate.DATE)
-                .addScalar("notes", Hibernate.STRING)
+                .addScalar("subjectName",StandardBasicTypes.STRING)
+                .addScalar("mark",StandardBasicTypes.STRING)
+                .addScalar("markString", StandardBasicTypes.STRING)
+                .addScalar("markType", StandardBasicTypes.STRING)
+                .addScalar("issuedByName", StandardBasicTypes.STRING)
+                .addScalar("issuedByLastName", StandardBasicTypes.STRING)
+                .addScalar("issuedDate", StandardBasicTypes.DATE)
+                .addScalar("notes", StandardBasicTypes.STRING)
                 .setString("userId", userId.toString())
                 .setString("subjectId", subjectId.toString())
                 .setResultTransformer(Transformers.aliasToBean(MarksDTO.class))
@@ -90,16 +110,16 @@ public class SubjectDao extends HibernateDaoSupport{
                 "join tbl_user u on u.user_id = um.issued_by_id_fk\n" +
                 "join tbl_subject s on s.subject_id = us.subject_id_fk\n" +
                 "where us.user_id_fk = :userId \n" +
-                "order by subjectName asc, issuedDate desc";
+                "order by issuedDate desc, subjectName asc";
         List<MarksDTO> marksDTOs = session.createSQLQuery(sql)
-                .addScalar("subjectName",Hibernate.STRING)
-                .addScalar("mark",Hibernate.STRING)
-                .addScalar("markString", Hibernate.STRING)
-                .addScalar("markType", Hibernate.STRING)
-                .addScalar("issuedByName", Hibernate.STRING)
-                .addScalar("issuedByLastName", Hibernate.STRING)
-                .addScalar("issuedDate", Hibernate.DATE)
-                .addScalar("notes", Hibernate.STRING)
+                .addScalar("subjectName",StandardBasicTypes.STRING)
+                .addScalar("mark",StandardBasicTypes.STRING)
+                .addScalar("markString", StandardBasicTypes.STRING)
+                .addScalar("markType", StandardBasicTypes.STRING)
+                .addScalar("issuedByName", StandardBasicTypes.STRING)
+                .addScalar("issuedByLastName", StandardBasicTypes.STRING)
+                .addScalar("issuedDate", StandardBasicTypes.DATE)
+                .addScalar("notes", StandardBasicTypes.STRING)
                 .setString("userId", userId.toString())
                 .setResultTransformer(Transformers.aliasToBean(MarksDTO.class))
                 .list();
@@ -111,8 +131,8 @@ public class SubjectDao extends HibernateDaoSupport{
         Session session = getSessionFactory().openSession();
         String sql = "select name, last_name as lastName from tbl_user where user_id = :userId";
         dto = (EditUserDTO) session.createSQLQuery(sql)
-                .addScalar("name", Hibernate.STRING)
-                .addScalar("lastName", Hibernate.STRING)
+                .addScalar("name", StandardBasicTypes.STRING)
+                .addScalar("lastName", StandardBasicTypes.STRING)
                 .setString("userId", userId.toString())
                 .setResultTransformer(Transformers.aliasToBean(EditUserDTO.class))
                 .uniqueResult();
@@ -139,8 +159,8 @@ public class SubjectDao extends HibernateDaoSupport{
                 "where u.user_id = :selectedUserId ) \n" +
                 "order by name";
         List<TSubjectEngine> result = session.createSQLQuery(sql)
-                .addScalar("subjectId", Hibernate.LONG)
-                .addScalar("name", Hibernate.STRING)
+                .addScalar("subjectId", StandardBasicTypes.LONG)
+                .addScalar("name", StandardBasicTypes.STRING)
                 .setString("userId", userId.toString())
                 .setString("selectedUserId", selectedUserId.toString())
                 .setResultTransformer(Transformers.aliasToBean(TSubjectEngine.class))
@@ -169,4 +189,15 @@ public class SubjectDao extends HibernateDaoSupport{
         session.save(markEngine);
         session.close();
     }
+
+    @SuppressWarnings("unchecked")
+    public List<TSubjectEngine> getAllSubjects() {
+        List<TSubjectEngine> result;
+        Session session = getSessionFactory().openSession();
+        result = session.createCriteria(TSubjectEngine.class).list();
+        session.close();
+        return result;
+    }
+
+
 }

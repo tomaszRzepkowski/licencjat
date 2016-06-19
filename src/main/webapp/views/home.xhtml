@@ -54,17 +54,19 @@
             </div>
         </ui:define>
         <ui:define name="messages">
-            <h:panelGroup id="messagesContainer" rendered="#{applicationBean.loginButtonClicked}">
-                <h:panelGroup rendered="#{applicationBean.loginSuccess}">
-                    <div class="alert alert-success">Success! You've been logged in</div>
+            <div style="height: 200px;">
+                <h:panelGroup id="messagesContainer" rendered="#{applicationBean.loginButtonClicked}">
+                    <h:panelGroup rendered="#{applicationBean.loginSuccess}">
+                        <div class="alert alert-success">Success! You've been logged in</div>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{not applicationBean.loginDTO.userFound}">
+                        <div class="alert alert-danger">User not found</div>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{ (not applicationBean.loginDTO.validPassword or not applicationBean.loginSuccess) and applicationBean.loginDTO.userFound}">
+                        <div class="alert alert-danger">Please provide valid credentials</div>
+                    </h:panelGroup>
                 </h:panelGroup>
-                <h:panelGroup rendered="#{not applicationBean.loginDTO.userFound}">
-                    <div class="alert alert-danger">User not found</div>
-                </h:panelGroup>
-                <h:panelGroup rendered="#{ (not applicationBean.loginDTO.validPassword or not applicationBean.loginSuccess) and applicationBean.loginDTO.userFound}">
-                    <div class="alert alert-danger">Please provide valid credentials</div>
-                </h:panelGroup>
-            </h:panelGroup>
+            </div>
         </ui:define>
     </ui:composition>
 </h:body>

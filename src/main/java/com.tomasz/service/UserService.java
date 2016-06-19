@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tomasz.pojo.dao.SubjectDao;
 import com.tomasz.pojo.dao.TClassEngine;
+import com.tomasz.pojo.dao.TSubjectEngine;
 import com.tomasz.pojo.dao.TUserEngine;
 import com.tomasz.pojo.dao.UserDao;
 
@@ -17,6 +19,9 @@ public class UserService {
 
     @Autowired
     UserDao userDao;
+
+    @Autowired
+    SubjectDao subjectDao;
 
     public TUserEngine getUserByID(long id) {
         TUserEngine userEngine = userDao.getUserByID(id);
@@ -61,6 +66,10 @@ public class UserService {
 
     public List<TClassEngine> getClasses(Long userId) {
         List<TClassEngine> classes = userDao.getClasses(userId);
-        return null;
+        return classes;
+    }
+
+    public List<TSubjectEngine> getAllSubjects() {
+        return subjectDao.getAllSubjects();
     }
 }

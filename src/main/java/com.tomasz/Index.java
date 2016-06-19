@@ -90,7 +90,9 @@ public class Index implements Serializable{
     public boolean isUserStaff() {
         return controller.isUserStaff(loginDTO.getUserId());
     }
-
+    //TODO dodac plan zajec
+    //TODO DOKONCZYC EDYCJE USERA
+    //TODO zrobic zapisywanie subjectow jako jakis superadmin a nie teacher
 //  CLASS BEAN PART
     private void getClassmatesForUser() {
         LoginDTO user = (LoginDTO) FacesContextProvider.getSessionAttributes().get("user");

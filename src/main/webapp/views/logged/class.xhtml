@@ -65,7 +65,7 @@
                                     <tbody>
                                     <ui:repeat value="#{applicationBean.classController.classmates}" var="classmates">
                                         <tr>
-                                            <td>#{classmates.clazz}</td>
+                                            <td>Class - #{classmates.className}</td>
                                             <td>#{classmates.name} #{classmates.lastName}</td>
                                             <td>#{classmates.loginDate eq null ? "Never logged yet" : classmates.loginDate}</td>
                                             <td>#{classmates.city}</td>
@@ -73,8 +73,13 @@
                                             <td>#{classmates.email}</td>
                                             <td>
                                                 <h:commandLink id="editMarksForUser" action="#{marksBean.editPageRedirect}" immediate="true"
-                                                               actionListener="#{marksBean.prepareEditData}" value="EDIT">
+                                                               actionListener="#{marksBean.prepareEditData}" value="Edit Marks">
                                                 <f:attribute name="selectedUserId" value="#{classmates.userId}"/>
+                                                </h:commandLink>
+                                                <br/>
+                                                <h:commandLink id="manageSubjectsForUser" action="#{marksBean.manageUserPageRedirect}" immediate="true"
+                                                               actionListener="#{marksBean.prepareEditData}" value="Manage">
+                                                    <f:attribute name="selectedUserId" value="#{classmates.userId}"/>
                                                 </h:commandLink>
                                             </td>
                                         </tr>

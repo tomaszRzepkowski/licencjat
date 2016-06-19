@@ -13,6 +13,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.transform.Transformers;
+import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.StringType;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -164,13 +165,13 @@ public class UserDao extends HibernateDaoSupport implements IBaseDao<TUserEngine
                 "WHERE u.user_type = 'STUDENT' AND uc.class_id_fk = :classId \n" +
                 "ORDER BY lastName ASC, name ASC ";
         result = (List<TUserEngine>) session.createSQLQuery(sql)
-                .addScalar("userId", Hibernate.LONG)
-                .addScalar("name", Hibernate.STRING)
-                .addScalar("lastName", Hibernate.STRING)
-                .addScalar("city", Hibernate.STRING)
-                .addScalar("phone", Hibernate.STRING)
-                .addScalar("email", Hibernate.STRING)
-                .addScalar("loginDate", Hibernate.STRING)
+                .addScalar("userId", StandardBasicTypes.LONG)
+                .addScalar("name", StandardBasicTypes.STRING)
+                .addScalar("lastName", StandardBasicTypes.STRING)
+                .addScalar("city", StandardBasicTypes.STRING)
+                .addScalar("phone", StandardBasicTypes.STRING)
+                .addScalar("email", StandardBasicTypes.STRING)
+                .addScalar("loginDate", StandardBasicTypes.STRING)
                 .setString("classId", classId.toString())
                 .setResultTransformer(Transformers.aliasToBean(TUserEngine.class))
                 .list();
@@ -196,18 +197,19 @@ public class UserDao extends HibernateDaoSupport implements IBaseDao<TUserEngine
         //below it removes last unnecesary ","
         classIds = classIds.substring(0, classIds.length()-1);
 
-        String sql = "SELECT u.user_id AS userId, name, u.last_name AS lastName, u.city, u.email, u.phone, u.login_date AS loginDate \n" +
-                "FROM tbl_user u JOIN tbl_user_class uc ON u.user_id = uc.user_id_fk\n" +
+        String sql = "SELECT u.user_id AS userId, c.name as className, u.name, u.last_name AS lastName, u.city, u.email, u.phone, u.login_date AS loginDate \n" +
+                "FROM tbl_user u JOIN tbl_user_class uc ON u.user_id = uc.user_id_fk JOIN tbl_class c on c.class_id = uc.class_id_fk\n" +
                 "WHERE u.user_type = 'STUDENT' AND uc.class_id_fk in (" + classIds + ") \n" +
                 "ORDER BY lastName ASC , name ASC";
         result = (List<TUserEngine>) session.createSQLQuery(sql)
-                .addScalar("userId", Hibernate.LONG)
-                .addScalar("name", Hibernate.STRING)
-                .addScalar("lastName", Hibernate.STRING)
-                .addScalar("city", Hibernate.STRING)
-                .addScalar("phone", Hibernate.STRING)
-                .addScalar("email", Hibernate.STRING)
-                .addScalar("loginDate", Hibernate.STRING)
+                .addScalar("userId", StandardBasicTypes.LONG)
+                .addScalar("className", StandardBasicTypes.STRING)
+                .addScalar("name", StandardBasicTypes.STRING)
+                .addScalar("lastName", StandardBasicTypes.STRING)
+                .addScalar("city", StandardBasicTypes.STRING)
+                .addScalar("phone", StandardBasicTypes.STRING)
+                .addScalar("email", StandardBasicTypes.STRING)
+                .addScalar("loginDate", StandardBasicTypes.STRING)
                 .setResultTransformer(Transformers.aliasToBean(TUserEngine.class))
                 .list();
         session.close();
@@ -221,9 +223,9 @@ public class UserDao extends HibernateDaoSupport implements IBaseDao<TUserEngine
                 "where user_id_fk = :userId \n" +
                 "order by name asc";
         List<TClassEngine> result = session.createSQLQuery(sql)
-                .addScalar("classId", Hibernate.LONG)
-                .addScalar("name", Hibernate.STRING)
-                .addScalar("description", Hibernate.STRING)
+                .addScalar("classId", StandardBasicTypes.LONG)
+                .addScalar("name", StandardBasicTypes.STRING)
+                .addScalar("description", StandardBasicTypes.STRING)
                 .setString("userId", userId.toString())
                 .setResultTransformer(Transformers.aliasToBean(TClassEngine.class))
                 .list();

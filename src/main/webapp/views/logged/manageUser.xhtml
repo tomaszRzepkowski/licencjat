@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j" xmlns:f="http://java.sun.com/jsf/core">
+
+
+<h:body>
+    <ui:composition template="../templates/master.xhtml">
+        <ui:define name="content">
+            <div class="editMarksPage">
+                <!--ADMIN PART-->
+                <h:panelGroup rendered="#{applicationBean.userStaff}">
+                    <h:form id="addSubjectForm" name="addSubjectForm">
+                        <div class="row form-group">
+                            <div class="col-md-2"></div>
+                            <div class="row col-md-8 padding-horizontal-15px">
+                                <div class="row">
+                                    <a4j:jsFunction name="selectUserAction" action="#{classBean.switchUser}"
+                                                    execute="@form" render="@form"/>
+                                    <h:outputLabel value="Select student:"/>
+                                    <h:selectOneMenu id="selectStudent" value="#{classBean.selectedStudentId}"
+                                                     styleClass="form-control margin-horizontal-5px" onchange="selectUserAction();">
+                                        <f:selectItems value="#{classBean.classController.classmates}" var="classmate"
+                                        itemValue="#{classmate.userId}" itemLabel="#{classmate.name} #{classmate.lastName}"/>
+                                    </h:selectOneMenu>
+                                </div>
+                                <div class="row">
+                                    <h:outputLabel value="Subjects assigned to user:"/>
+                                    <h:panelGroup rendered="#{empty classBean.classController.userSubjects}">
+                                        <div class="row margin-horizontal-15px alert alert-warning">
+                                            User has no subjects yet. You can add subjects to user below.
+                                        </div>
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{not empty classBean.classController.userSubjects}">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Subject name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <ui:repeat value="#{classBean.classController.userSubjects}" var="subject"
+                                                       varStatus="status">
+                                                <tr>
+                                                    <td>#{status.index}</td>
+                                                    <td>#{subject.name}</td>
+                                                </tr>
+                                            </ui:repeat>
+                                        </tbody>
+                                    </table>
+                                    </h:panelGroup>
+                                </div>
+                                <div class="row">
+                                    <h:outputLabel value="Select subjects:"/>
+                                    <h:selectManyListbox id="selectSubject" value="#{classBean.classController.selectedSubjects}"
+                                                         styleClass="form-control margin-horizontal-5px">
+                                        <f:selectItems value="#{classBean.classController.avaliableSubjects}" var="subject"
+                                                       itemValue="#{subject.subjectId}" itemLabel="#{subject.name}"/>
+                                    </h:selectManyListbox>
+                                </div>
+                                <div class="row">
+                                    <h:commandButton id="saveSubjects" value="Save"
+                                                     styleClass="btn btn-primary"
+                                                     action="#{classBean.classController.saveSubjects}"/>
+                                </div>
+                            </div>
+                        </div>
+
+                    </h:form>
+                </h:panelGroup>
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        selectUserAction();
+                    });
+                </script>
+            </div>
+        </ui:define>
+        <ui:define name="messages">
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

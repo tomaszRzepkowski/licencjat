@@ -29,6 +29,10 @@ public class MarkService {
         return subjectDao.getSubjectsForUser(username);
     }
 
+    public List<TSubjectEngine> getSubjectsForUser(Long userId) {
+        return subjectDao.getSubjectsForUser(userId);
+    }
+
     public List<MarksDTO> getMarksForSubject(Long userId, Long subjectId) {
         return subjectDao.getMarksForSubject(userId, subjectId);
     }

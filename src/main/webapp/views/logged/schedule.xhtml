@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j" xmlns:f="http://java.sun.com/jsf/core">
+
+
+<h:body>
+    <ui:composition template="../templates/master.xhtml">
+        <ui:define name="content">
+            <div class="userInfo">
+                <h:panelGroup rendered="#{not applicationBean.userStaff}">
+                    <h:form id="scheduleForm" name="scheduleForm">
+                        <div class="row scheduleDayList" >
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Monday</th>
+                                        <th>Tuesday</th>
+                                        <th>Wednesday</th>
+                                        <th>Thursday</th>
+                                        <th>Friday</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <ul>
+                                                <ui:repeat value="#{scheduleBean.controller.scheduleForMonday}" var="schedule">
+                                                <li>
+                                                    #{schedule.time} - #{schedule.place} <br />
+                                                    #{schedule.subjectName}
+
+                                                    #{schedule.notes}
+                                                </li>
+                                                </ui:repeat>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <ul>
+                                                <ui:repeat value="#{scheduleBean.controller.scheduleForTuesday}" var="schedule">
+                                                    <li>#{schedule.time} - #{schedule.subjectName} #{schedule.place} #{schedule.notes}</li>
+                                                </ui:repeat>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <ul>
+                                                <ui:repeat value="#{scheduleBean.controller.scheduleForWednesday}" var="schedule">
+                                                    <li>#{schedule.time} - #{schedule.subjectName} #{schedule.place} #{schedule.notes}</li>
+                                                </ui:repeat>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <ul>
+                                                <ui:repeat value="#{scheduleBean.controller.scheduleForThursday}" var="schedule">
+                                                    <li>#{schedule.time} - #{schedule.subjectName} #{schedule.place} #{schedule.notes}</li>
+                                                </ui:repeat>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <ul>
+                                                <ui:repeat value="#{scheduleBean.controller.scheduleForFriday}" var="schedule">
+                                                    <li>#{schedule.time} - #{schedule.subjectName} #{schedule.place} #{schedule.notes}</li>
+                                                </ui:repeat>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </h:form>
+                </h:panelGroup>
+                <!--ADMIN PART-->
+                <h:panelGroup rendered="#{applicationBean.userStaff}">
+                    <h:form id="scheduleAdminForm" name="scheduleForm">
+                    </h:form>
+                </h:panelGroup>
+            </div>
+        </ui:define>
+        <ui:define name="messages">
+        </ui:define>
+    </ui:composition>
+</h:body>
+
+</html>

@@ -135,6 +135,10 @@ public class MarksBean implements Serializable{
         return "editMarks.xhtml?faces-redirect=true&userId=" + selectedUserId.toString();
     }
 
+    public String manageUserPageRedirect() {
+        return "manageUser.xhtml?faces-redirect=true&userId=" + selectedUserId.toString();
+    }
+
     public Long getSelectedUserId() {
         return selectedUserId;
     }

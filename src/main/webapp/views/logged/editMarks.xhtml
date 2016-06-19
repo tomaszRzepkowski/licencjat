@@ -12,7 +12,7 @@
 <h:body>
     <ui:composition template="../templates/master.xhtml">
         <ui:define name="content">
-            <div class="editMarksPage">
+            <div class="editMarksPage form-group">
                 <!--ADMIN PART-->
                 <h:panelGroup rendered="#{applicationBean.userStaff}">
                     <h:form id="editMarksForm" name="editMarksForm">
@@ -32,12 +32,13 @@
                                                    itemValue="#{mark.id}" itemLabel="#{mark.description}"/>
                                 </h:selectOneMenu>
                                 <h:outputLabel value="Note (Optional)"/>
-                                <h:inputTextarea id="markNote" value="#{marksBean.editUserDTO.mark.notes}" />
+                                <h:inputTextarea id="markNote" styleClass="form-control" value="#{marksBean.editUserDTO.mark.notes}" />
                                 <h:outputLabel value="Mark Type"/>
-                                <h:inputText id="markType" value="#{marksBean.editUserDTO.mark.markType}" />
-                                <h:commandButton value="Submit" styleClass="btn btn-primary" action="#{marksBean.addMarkForUser}" />
+                                <h:inputText id="markType" styleClass="form-control padding-horizontal-5px" value="#{marksBean.editUserDTO.mark.markType}" />
+                                <h:commandButton value="Submit" styleClass="btn btn-primary margin-horizontal-15px" action="#{marksBean.addMarkForUser}" />
                             </div>
                         </div>
+                        <!--TODO walidacja!!!-->
                     </h:form>
                 </h:panelGroup>
             </div>
